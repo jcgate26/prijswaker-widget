@@ -2,75 +2,115 @@
  "updated": "2026-11-08",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 1,
+ "groups": [
+  {
+   "id": "soundbar",
+   "short": "Soundbars",
+   "title": "Soundbars"
+  },
+  {
+   "id": "pan",
+   "short": "Pannen",
+   "title": "Demeyere Apollo 7"
+  }
+ ],
  "items": [
   {
    "product": "apollo_20",
    "name": "Apollo 20 cm",
+   "full_name": "Demeyere Apollo 7 conische sauteuse 20 cm",
    "group": "Demeyere Apollo 7",
+   "group_id": "pan",
    "status": "Deal",
    "best": 119.0,
    "shop": "bol.com (verkoper mijnkookwinkel)",
+   "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o20-cm-2-l/9200000005802359/",
    "diff_pct": -14.9,
+   "avg2026": 140,
    "threshold": 126
   },
   {
    "product": "apollo_24",
    "name": "Apollo 24 cm",
+   "full_name": "Demeyere Apollo 7 conische sauteuse 24 cm",
    "group": "Demeyere Apollo 7",
+   "group_id": "pan",
    "status": "Normaal",
    "best": 170.0,
    "shop": "bol.com (verkoper verthus.be)",
+   "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o24-cm-3-3-l/9200000005802401/",
    "diff_pct": -2.3,
+   "avg2026": 174,
    "threshold": 157
   },
   {
    "product": "flexus_300",
    "name": "Flexus Core 300",
+   "full_name": "Klipsch Flexus Core 300",
    "group": "Soundbars",
+   "group_id": "soundbar",
    "status": "Normaal",
    "best": 999.0,
    "shop": "Art & Craft",
+   "url": "https://www.kieskeurig.nl/home_cinema_set/product/72646825-klipsch-flexus-core-300-zilver-5-1-2-kanalen",
    "diff_pct": -1.4,
+   "avg2026": 1013,
    "threshold": 912
   },
   {
    "product": "apollo_28",
    "name": "Apollo 28 cm",
+   "full_name": "Demeyere Apollo 7 conische sauteuse 28 cm",
    "group": "Demeyere Apollo 7",
+   "group_id": "pan",
    "status": "Normaal",
    "best": 181.0,
    "shop": "bol.com (verkoper Storena)",
+   "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
    "diff_pct": -0.7,
+   "avg2026": 182,
    "threshold": 164
   },
   {
    "product": "beam_ultra",
    "name": "Beam Ultra",
+   "full_name": "Sonos Beam Ultra",
    "group": "Soundbars",
+   "group_id": "soundbar",
    "status": "Normaal",
    "best": 698.95,
    "shop": "Tink.nl",
+   "url": "https://www.kieskeurig.nl/soundbar/product/57043127-sonos-beam-ultra-zwart-7-1-2-kanalen",
    "diff_pct": 0.5,
+   "avg2026": 695,
    "threshold": 626
   },
   {
    "product": "arc_ultra",
    "name": "Arc Ultra",
+   "full_name": "Sonos Arc Ultra",
    "group": "Soundbars",
+   "group_id": "soundbar",
    "status": "Duur",
    "best": 999.0,
    "shop": "HelloTV",
+   "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
    "diff_pct": 16.7,
+   "avg2026": 856,
    "threshold": 770
   },
   {
    "product": "enchant_1100",
    "name": "Enchant 1100",
+   "full_name": "Harman Kardon Enchant 1100",
    "group": "Soundbars",
+   "group_id": "soundbar",
    "status": "Duur",
    "best": 949.0,
    "shop": "Coolblue.nl",
+   "url": "https://www.kieskeurig.nl/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
    "diff_pct": 31.2,
+   "avg2026": 723,
    "threshold": 651
   }
  ]
