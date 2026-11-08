@@ -23,30 +23,26 @@ async function loadData() {
   }
 }
 
-// Tile fills are semi-transparent on purpose: with a tinted home screen iOS turns every opaque colour
-// into solid white (hiding the white text on it), while translucent fills stay translucent.
+// Tiles have no fill, only a thin border. With a tinted or black-and-white home screen iOS turns
+// filled shapes into solid white (hiding the text on them); borders and text stay readable.
 const C = {
   bg: new Color("#161617"),
-  tile: new Color("#ffffff", 0.08),
   text: new Color("#f2f2f7"),
   muted: new Color("#98989f"),
   green: new Color("#34b36b"),
-  dealTile: new Color("#34b36b", 0.5),
   white: new Color("#ffffff"),
-  sharpTile: new Color("#34b36b", 0.16),
   sharpText: new Color("#5fd28f"),
-  redTile: new Color("#ff7a63", 0.15),
   redText: new Color("#ff7a63"),
   amber: new Color("#f0b54a"),
 };
 
-// Per status: [tile background, price colour, small text colour, name colour]
+// Per status: [border colour, border width, price colour, small text colour, name colour]
 const STYLE = {
-  Deal: [C.dealTile, C.white, C.white, C.white],
-  Scherp: [C.sharpTile, C.sharpText, C.sharpText, C.muted],
-  Normaal: [C.tile, C.text, C.muted, C.muted],
-  Duur: [C.redTile, C.redText, C.redText, C.muted],
-  "Geen prijs": [C.tile, C.muted, C.muted, C.muted],
+  Deal: [C.green, 2, C.sharpText, C.sharpText, C.text],
+  Scherp: [C.sharpText, 1, C.sharpText, C.sharpText, C.muted],
+  Normaal: [new Color("#5a5a60"), 1, C.text, C.muted, C.muted],
+  Duur: [C.redText, 1, C.redText, C.redText, C.muted],
+  "Geen prijs": [new Color("#5a5a60"), 1, C.muted, C.muted, C.muted],
 };
 const TEXT_COLOR = { Deal: C.green, Scherp: C.sharpText, Normaal: C.text, Duur: C.redText, "Geen prijs": C.muted };
 
@@ -103,7 +99,6 @@ function layout(family) {
 function addTile(row, L, tileW, tileH) {
   const t = row.addStack();
   t.size = new Size(tileW, tileH);
-  t.backgroundColor = C.tile;
   t.cornerRadius = L.big ? 12 : 9;
   t.layoutVertically();
   t.setPadding(2, L.big ? 9 : 7, 2, L.big ? 9 : 7);
@@ -111,7 +106,7 @@ function addTile(row, L, tileW, tileH) {
 }
 
 function headerTile(t, data, L, title, deals) {
-  t.backgroundColor = Color.clear();
+  t.borderWidth = 0;
   t.setPadding(2, 3, 2, 3);
   t.addSpacer();
   const head = t.addText(title);
@@ -164,11 +159,13 @@ function label(t, L, text, color) {
 }
 
 function productTile(t, it, L) {
-  const [fill, priceColor, smallColor, nameColor] = STYLE[it.status] || STYLE.Normaal;
-  t.backgroundColor = fill;
+  const [border, width, priceColor, smallColor, nameColor] = STYLE[it.status] || STYLE.Normaal;
+  t.borderColor = border;
+  t.borderWidth = width;
   t.addSpacer();
   label(t, L, it.name, nameColor);
-  textLine(t, L, eur(it.best), it.best == null ? "geen prijs" : pct(it.diff_pct), priceColor, smallColor);
+  const right = it.best == null ? "geen prijs" : pct(it.diff_pct);
+  textLine(t, L, eur(it.best), right, priceColor, smallColor);
   if (L.big && it.shop) label(t, L, shopName(it.shop), nameColor);
   t.addSpacer();
 }
@@ -177,8 +174,9 @@ function themeTile(t, g, items, L) {
   const deals = items.filter((i) => i.status === "Deal").length;
   const top = items[0];
   const status = deals ? "Deal" : top && top.status === "Scherp" ? "Scherp" : "Normaal";
-  const [fill, priceColor, smallColor, nameColor] = STYLE[status];
-  t.backgroundColor = fill;
+  const [border, width, priceColor, smallColor, nameColor] = STYLE[status];
+  t.borderColor = border;
+  t.borderWidth = width;
   t.addSpacer();
   label(t, L, `${g.short} · ${items.length}`, nameColor);
   const main = deals ? `${deals} deal${deals > 1 ? "s" : ""}` : top ? eur(top.best) : "—";
