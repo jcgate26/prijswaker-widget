@@ -49,6 +49,8 @@ const TEXT_COLOR = { Deal: C.green, Scherp: C.sharpText, Normaal: C.text, Duur: 
 const eur = (v) => v == null ? "—" : "€" + new Intl.NumberFormat("nl-NL", {
   minimumFractionDigits: 0, maximumFractionDigits: Number.isInteger(v) ? 0 : 2 }).format(v);
 const pct = (d) => d == null ? "" : (d > 0 ? "+" : d < 0 ? "−" : "") + Math.abs(Math.round(d)) + "%";
+// Whole euros in the widget tiles (no room for cents); the detail screen keeps cents.
+const eur0 = (v) => v == null ? "—" : "€" + new Intl.NumberFormat("nl-NL", { maximumFractionDigits: 0 }).format(Math.round(v));
 const shopName = (s) => (s || "").replace(/\s*\(.*\)$/, "");
 
 function daysToBlackFriday() {
@@ -96,93 +98,106 @@ function layout(family) {
   return { w: small, h: small, cols: 2, rows: 4, pad: 9, gap: 4, big: false };
 }
 
-function addTile(row, L, tileW, tileH) {
-  const t = row.addStack();
-  t.size = new Size(tileW, tileH);
-  t.cornerRadius = L.big ? 12 : 9;
-  t.layoutVertically();
-  t.setPadding(2, L.big ? 9 : 7, 2, L.big ? 9 : 7);
-  return t;
+// Each tile is drawn as a transparent image (border + text only). Home screens in tinted or
+// black-and-white mode turn widget shapes into solid white; a transparent image keeps only its
+// lines and letters, so the tiles stay readable in every home screen style.
+const CORE_VERSION = "v6";
+
+function canvas(w, h) {
+  const ctx = new DrawContext();
+  ctx.size = new Size(w, h);
+  ctx.opaque = false;
+  ctx.respectScreenScale = true;
+  return ctx;
 }
 
-function headerTile(t, data, L, title, deals) {
-  t.borderWidth = 0;
-  t.setPadding(2, 3, 2, 3);
-  t.addSpacer();
-  const head = t.addText(title);
-  head.font = Font.semiboldSystemFont(L.big ? 15 : 12);
-  head.textColor = C.text;
-  head.lineLimit = 1;
-  head.minimumScaleFactor = 0.75;
+function border(ctx, w, h, color, width, radius) {
+  if (!width) return;
+  const p = new Path();
+  const i = width / 2;
+  p.addRoundedRect(new Rect(i, i, w - width, h - width), radius, radius);
+  ctx.addPath(p);
+  ctx.setStrokeColor(color);
+  ctx.setLineWidth(width);
+  ctx.strokePath();
+}
+
+function text(ctx, str, x, y, w, size, color, opts = {}) {
+  ctx.setFont(opts.bold ? Font.semiboldSystemFont(size) : Font.systemFont(size));
+  ctx.setTextColor(color);
+  if (opts.right) ctx.setTextAlignedRight();
+  else ctx.setTextAlignedLeft();
+  ctx.drawTextInRect(str, new Rect(x, y, w, size * 1.35));
+}
+
+// lines: [{left, right, size, bold, leftColor, rightColor, rightSize}] drawn vertically centred
+function drawTile(L, w, h, lines, borderColor, borderWidth, padX) {
+  const ctx = canvas(w, h);
+  border(ctx, w, h, borderColor, borderWidth, L.big ? 12 : 9);
+  const heights = lines.map((l) => l.size * 1.28);
+  let y = (h - heights.reduce((a, b) => a + b, 0)) / 2;
+  lines.forEach((l, i) => {
+    const inner = w - 2 * padX;
+    if (l.right) {
+      const rs = l.rightSize || l.size;
+      text(ctx, l.right, padX, y + (l.size - rs) * 0.85, inner, rs, l.rightColor || l.leftColor, { bold: true, right: true });
+    }
+    text(ctx, l.left, padX, y, inner - (l.right ? l.right.length * (l.rightSize || l.size) * 0.55 + 2 : 0), l.size, l.leftColor, { bold: l.bold });
+    y += heights[i];
+  });
+  return ctx.getImage();
+}
+
+function priceSize(L, value, tileW) {
+  const base = L.big ? 17 : 12.5;
+  // Narrow tiles: shrink four-digit prices so the % still fits next to them.
+  return value != null && value >= 1000 && tileW < 80 ? base - 2 : base;
+}
+
+function headerImage(data, L, w, h, title, deals) {
   const d = daysToBlackFriday();
   const parts = [];
   if (deals) parts.push(`${deals} deal${deals > 1 ? "s" : ""}`);
   if (d > 0) parts.push(`BF ${d} d`);
   else if (d === 0) parts.push("Black Friday!");
-  const sub = t.addText(parts.join(" · ") || " ");
-  sub.font = Font.semiboldSystemFont(L.big ? 11 : 8.5);
-  sub.textColor = deals ? C.green : C.muted;
-  sub.lineLimit = 1;
-  sub.minimumScaleFactor = 0.8;
+  const lines = [
+    { left: title, right: CORE_VERSION, size: L.big ? 15 : 12, rightSize: 6.5, bold: true, leftColor: C.text, rightColor: C.muted },
+    { left: parts.join(" · ") || " ", size: L.big ? 11 : 8.5, bold: true, leftColor: deals ? C.green : C.muted },
+  ];
   if (data.updated && data.updated < todayIso()) {
     // Only show the date when the data is not from today.
     const upd = new Date(data.updated + "T12:00:00");
-    const old = t.addText("stand " + upd.toLocaleDateString("nl-NL", { day: "numeric", month: "short" }));
-    old.font = Font.mediumSystemFont(L.big ? 10 : 8);
-    old.textColor = C.amber;
-    old.lineLimit = 1;
+    lines.push({ left: "stand " + upd.toLocaleDateString("nl-NL", { day: "numeric", month: "short" }),
+      size: L.big ? 10 : 8, leftColor: C.amber });
   }
-  t.addSpacer();
+  return drawTile(L, w, h, lines, null, 0, 3);
 }
 
-function textLine(t, L, left, right, leftColor, rightColor, leftSize) {
-  const line = t.addStack();
-  line.centerAlignContent();
-  const a = line.addText(left);
-  a.font = Font.semiboldSystemFont(leftSize || (L.big ? 17 : 12.5));
-  a.textColor = leftColor;
-  a.lineLimit = 1;
-  a.minimumScaleFactor = 0.7;
-  line.addSpacer();
-  const b = line.addText(right);
-  b.font = Font.semiboldSystemFont(L.big ? 11 : 8.5);
-  b.textColor = rightColor;
-  b.lineLimit = 1;
+function productImage(it, L, w, h) {
+  const [bColor, bWidth, priceColor, smallColor, nameColor] = STYLE[it.status] || STYLE.Normaal;
+  const small = L.big ? 11 : 8.5;
+  const lines = [
+    { left: it.name, size: small, leftColor: nameColor },
+    { left: eur0(it.best), right: it.best == null ? "geen prijs" : pct(it.diff_pct), size: priceSize(L, it.best, w),
+      rightSize: small, bold: true, leftColor: priceColor, rightColor: smallColor },
+  ];
+  if (L.big && it.shop) lines.push({ left: shopName(it.shop), size: 9.5, leftColor: nameColor });
+  return drawTile(L, w, h, lines, bColor, bWidth, L.big ? 9 : 7);
 }
 
-function label(t, L, text, color) {
-  const n = t.addText(text);
-  n.font = Font.systemFont(L.big ? 11 : 8.5);
-  n.textColor = color;
-  n.lineLimit = 1;
-  n.minimumScaleFactor = 0.75;
-}
-
-function productTile(t, it, L) {
-  const [border, width, priceColor, smallColor, nameColor] = STYLE[it.status] || STYLE.Normaal;
-  t.borderColor = border;
-  t.borderWidth = width;
-  t.addSpacer();
-  label(t, L, it.name, nameColor);
-  const right = it.best == null ? "geen prijs" : pct(it.diff_pct);
-  textLine(t, L, eur(it.best), right, priceColor, smallColor);
-  if (L.big && it.shop) label(t, L, shopName(it.shop), nameColor);
-  t.addSpacer();
-}
-
-function themeTile(t, g, items, L) {
+function themeImage(g, items, L, w, h) {
   const deals = items.filter((i) => i.status === "Deal").length;
   const top = items[0];
   const status = deals ? "Deal" : top && top.status === "Scherp" ? "Scherp" : "Normaal";
-  const [border, width, priceColor, smallColor, nameColor] = STYLE[status];
-  t.borderColor = border;
-  t.borderWidth = width;
-  t.addSpacer();
-  label(t, L, `${g.short} · ${items.length}`, nameColor);
-  const main = deals ? `${deals} deal${deals > 1 ? "s" : ""}` : top ? eur(top.best) : "—";
-  textLine(t, L, main, top ? pct(top.diff_pct) : "", priceColor, smallColor, L.big ? 15 : 11.5);
-  if (L.big && top) label(t, L, "beste: " + top.name, nameColor);
-  t.addSpacer();
+  const [bColor, bWidth, priceColor, smallColor, nameColor] = STYLE[status];
+  const small = L.big ? 11 : 8.5;
+  const lines = [
+    { left: `${g.short} · ${items.length}`, size: small, leftColor: nameColor },
+    { left: deals ? `${deals} deal${deals > 1 ? "s" : ""}` : top ? eur0(top.best) : "—", right: top ? pct(top.diff_pct) : "",
+      size: L.big ? 15 : 11.5, rightSize: small, bold: true, leftColor: priceColor, rightColor: smallColor },
+  ];
+  if (L.big && top) lines.push({ left: "beste: " + top.name, size: 9.5, leftColor: nameColor });
+  return drawTile(L, w, h, lines, bColor, bWidth, L.big ? 9 : 7);
 }
 
 function buildWidget(data, family, param) {
@@ -229,10 +244,13 @@ function buildWidget(data, family, param) {
         empty.size = new Size(tileW, tileH);
         continue;
       }
-      const t = addTile(row, L, tileW, tileH);
-      if (s.kind === "header") headerTile(t, data, L, group ? group.short : "Prijswaker", deals);
-      else if (s.kind === "theme") themeTile(t, s.g, s.items, L);
-      else productTile(t, s.it, L);
+      const t = row.addStack();
+      t.size = new Size(tileW, tileH);
+      const img = s.kind === "header" ? headerImage(data, L, tileW, tileH, group ? group.short : "Prijswaker", deals)
+        : s.kind === "theme" ? themeImage(s.g, s.items, L, tileW, tileH)
+        : productImage(s.it, L, tileW, tileH);
+      const wi = t.addImage(img);
+      wi.imageSize = new Size(tileW, tileH);
       // Medium and large widgets can link each tile; the small one opens the screen of the whole widget.
       if (family !== "small" && s.kind !== "header") {
         const gid = s.kind === "theme" ? s.g.id : s.it.group_id;
