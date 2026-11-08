@@ -24,16 +24,6 @@
    "threshold": 157
   },
   {
-   "product": "flexus_300",
-   "name": "Flexus Core 300",
-   "group": "Soundbars",
-   "status": "Normaal",
-   "best": 999.0,
-   "shop": "Art & Craft",
-   "diff_pct": -1.4,
-   "threshold": 912
-  },
-  {
    "product": "apollo_28",
    "name": "Apollo 28 cm",
    "group": "Demeyere Apollo 7",
@@ -44,34 +34,44 @@
    "threshold": 164
   },
   {
-   "product": "beam_ultra",
-   "name": "Beam Ultra",
-   "group": "Soundbars",
-   "status": "Normaal",
-   "best": 698.95,
-   "shop": "Tink.nl",
-   "diff_pct": 0.5,
-   "threshold": 626
-  },
-  {
    "product": "arc_ultra",
    "name": "Arc Ultra",
    "group": "Soundbars",
    "status": "Duur",
-   "best": 999.0,
-   "shop": "HelloTV",
-   "diff_pct": 16.7,
+   "best": 1099.0,
+   "shop": "Sonos.com",
+   "diff_pct": 28.4,
    "threshold": 770
+  },
+  {
+   "product": "beam_ultra",
+   "name": "Beam Ultra",
+   "group": "Soundbars",
+   "status": "Geen prijs",
+   "best": null,
+   "shop": null,
+   "diff_pct": null,
+   "threshold": 626
   },
   {
    "product": "enchant_1100",
    "name": "Enchant 1100",
    "group": "Soundbars",
-   "status": "Duur",
-   "best": 949.0,
-   "shop": "Coolblue.nl",
-   "diff_pct": 31.2,
+   "status": "Geen prijs",
+   "best": null,
+   "shop": null,
+   "diff_pct": null,
    "threshold": 651
+  },
+  {
+   "product": "flexus_300",
+   "name": "Flexus Core 300",
+   "group": "Soundbars",
+   "status": "Geen prijs",
+   "best": null,
+   "shop": null,
+   "diff_pct": null,
+   "threshold": 912
   }
  ]
 }
