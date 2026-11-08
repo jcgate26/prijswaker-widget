@@ -12,7 +12,14 @@ Gegevens voor de iPhone-widget van de Prijswaker: per product de status en de be
 3. Open Scriptable, tik op **+**, plak de tekst en tik linksboven op de naam om het script
    **Prijswaker** te noemen. Tik op **Gereed**.
 4. Houd je vinger op een lege plek van je beginscherm, tik op **Wijzig** › **Voeg widget toe**,
-   kies **Scriptable** en de middelste maat. Zet hem neer.
+   kies **Scriptable** en een maat (klein: 7 producten, middel: 7, groot: tot 17). Zet hem neer.
 5. Houd de widget ingedrukt › **Wijzig widget** › bij **Script** kies **Prijswaker**.
 
 Tik op de widget om het volledige dashboard te openen.
+
+## Ontwerp aanpassen
+
+`Prijswaker.js` is alleen een lader: hij haalt elke keer het ontwerp `core.js` van GitHub en
+bewaart een kopie voor als je offline bent. Een nieuw ontwerp komt dus vanzelf binnen; opnieuw
+plakken is niet nodig. Tegels: groen = deal, lichtgroen = scherp, grijs = normaal, rood = duur.
+Het percentage is de afwijking van het gemiddelde van 2026.
