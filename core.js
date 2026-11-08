@@ -23,23 +23,26 @@ async function loadData() {
   }
 }
 
+// Tile fills are semi-transparent on purpose: with a tinted home screen iOS turns every opaque colour
+// into solid white (hiding the white text on it), while translucent fills stay translucent.
 const C = {
   bg: new Color("#161617"),
-  tile: new Color("#262628"),
+  tile: new Color("#ffffff", 0.08),
   text: new Color("#f2f2f7"),
   muted: new Color("#98989f"),
   green: new Color("#34b36b"),
+  dealTile: new Color("#34b36b", 0.5),
   white: new Color("#ffffff"),
-  sharpTile: new Color("#1d3426"),
+  sharpTile: new Color("#34b36b", 0.16),
   sharpText: new Color("#5fd28f"),
-  redTile: new Color("#3b201c"),
+  redTile: new Color("#ff7a63", 0.15),
   redText: new Color("#ff7a63"),
   amber: new Color("#f0b54a"),
 };
 
 // Per status: [tile background, price colour, small text colour, name colour]
 const STYLE = {
-  Deal: [C.green, C.white, C.white, C.white],
+  Deal: [C.dealTile, C.white, C.white, C.white],
   Scherp: [C.sharpTile, C.sharpText, C.sharpText, C.muted],
   Normaal: [C.tile, C.text, C.muted, C.muted],
   Duur: [C.redTile, C.redText, C.redText, C.muted],
@@ -288,7 +291,7 @@ function detailScreen(data, groupId, productId) {
       r.titleColor = deals ? C.green : C.muted;
     });
     for (const it of items) {
-      const fill = it.product === productId ? new Color("#2c2c30") : C.tile;
+      const fill = it.product === productId ? new Color("#2c2c30") : new Color("#1f1f21");
       const parts = [shopName(it.shop) || "geen prijs die meetelt"];
       if (it.avg2026) parts.push(`gem. ${eur(it.avg2026)}`);
       if (it.threshold) parts.push(`deal ≤ ${eur(it.threshold)}`);
