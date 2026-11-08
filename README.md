@@ -17,6 +17,16 @@ Gegevens voor de iPhone-widget van de Prijswaker: per product de status en de be
 
 Tik op de widget om het volledige dashboard te openen.
 
+## Per thema en doorklikken
+
+- Een widget voor één thema: houd de widget ingedrukt › **Wijzig widget** › bij **Parameter** typ je
+  het thema, bijvoorbeeld `Pannen` of `Soundbars`. Zet meerdere widgets op elkaar voor een stapel
+  waar je doorheen veegt.
+- Zonder parameter toont de widget alles; passen de producten niet meer, dan eerst één tegel per thema.
+- Tik op de widget voor het detailscherm in Scriptable: alle producten van het thema met winkel,
+  gemiddelde en dealgrens. Tik op een product om de winkel te openen. Bij middel en groot formaat
+  opent elke tegel zijn eigen thema.
+
 ## Ontwerp aanpassen
 
 `Prijswaker.js` is alleen een lader: hij haalt elke keer het ontwerp `core.js` van GitHub en
