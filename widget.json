@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08",
+ "updated": "2026-11-09",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 1,
  "groups": [
@@ -30,20 +30,6 @@
    "threshold": 126
   },
   {
-   "product": "apollo_24",
-   "name": "Apollo 24 cm",
-   "full_name": "Demeyere Apollo 7 conische sauteuse 24 cm",
-   "group": "Demeyere Apollo 7",
-   "group_id": "pan",
-   "status": "Normaal",
-   "best": 170.0,
-   "shop": "bol.com (verkoper verthus.be)",
-   "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o24-cm-3-3-l/9200000005802401/",
-   "diff_pct": -2.3,
-   "avg2026": 174,
-   "threshold": 157
-  },
-  {
    "product": "flexus_300",
    "name": "Flexus Core 300",
    "full_name": "Klipsch Flexus Core 300",
@@ -67,7 +53,7 @@
    "best": 181.0,
    "shop": "bol.com (verkoper Storena)",
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
-   "diff_pct": -0.7,
+   "diff_pct": -0.8,
    "avg2026": 182,
    "threshold": 164
   },
@@ -84,6 +70,20 @@
    "diff_pct": 0.5,
    "avg2026": 695,
    "threshold": 626
+  },
+  {
+   "product": "apollo_24",
+   "name": "Apollo 24 cm",
+   "full_name": "Demeyere Apollo 7 conische sauteuse 24 cm",
+   "group": "Demeyere Apollo 7",
+   "group_id": "pan",
+   "status": "Normaal",
+   "best": 181.0,
+   "shop": "bol.com",
+   "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o24-cm-3-3-l/9200000005802401/",
+   "diff_pct": 4.0,
+   "avg2026": 174,
+   "threshold": 157
   },
   {
    "product": "arc_ultra",
@@ -109,7 +109,7 @@
    "best": 949.0,
    "shop": "Coolblue.nl",
    "url": "https://www.kieskeurig.nl/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
-   "diff_pct": 31.2,
+   "diff_pct": 31.3,
    "avg2026": 723,
    "threshold": 651
   }
