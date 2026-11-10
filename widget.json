@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09",
+ "updated": "2026-11-10",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 1,
  "groups": [
@@ -54,7 +54,7 @@
    "shop": "bol.com (verkoper Storena)",
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
    "diff_pct": -0.8,
-   "avg2026": 182,
+   "avg2026": 183,
    "threshold": 164
   },
   {
@@ -97,7 +97,7 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
    "diff_pct": 16.7,
    "avg2026": 856,
-   "threshold": 770
+   "threshold": 771
   },
   {
    "product": "enchant_1100",
@@ -111,7 +111,7 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
    "diff_pct": 31.3,
    "avg2026": 723,
-   "threshold": 651
+   "threshold": 650
   }
  ]
 }
