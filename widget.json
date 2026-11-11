@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 1,
  "groups": [
@@ -53,7 +53,7 @@
    "best": 181.0,
    "shop": "bol.com (verkoper Storena)",
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
-   "diff_pct": -0.8,
+   "diff_pct": -0.9,
    "avg2026": 183,
    "threshold": 164
   },
