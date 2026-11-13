@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-12",
+ "updated": "2026-11-13",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
- "deals": 1,
+ "deals": 2,
  "groups": [
   {
    "id": "soundbar",
@@ -35,13 +35,13 @@
    "full_name": "Klipsch Flexus Core 300",
    "group": "Soundbars",
    "group_id": "soundbar",
-   "status": "Normaal",
-   "best": 999.0,
+   "status": "Deal",
+   "best": 899.0,
    "shop": "Art & Craft",
-   "url": "https://www.kieskeurig.nl/home_cinema_set/product/72646825-klipsch-flexus-core-300-zilver-5-1-2-kanalen",
-   "diff_pct": -1.4,
+   "url": "https://www.kieskeurig.nl/soundbar/product/52151405-klipsch-flexus-core-300-zwart-5-1-2-kanalen",
+   "diff_pct": -11.2,
    "avg2026": 1013,
-   "threshold": 912
+   "threshold": 911
   },
   {
    "product": "apollo_28",
@@ -55,7 +55,7 @@
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
    "diff_pct": -1.0,
    "avg2026": 183,
-   "threshold": 164
+   "threshold": 165
   },
   {
    "product": "beam_ultra",
@@ -95,8 +95,8 @@
    "best": 999.0,
    "shop": "HelloTV",
    "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
-   "diff_pct": 16.7,
-   "avg2026": 856,
+   "diff_pct": 16.6,
+   "avg2026": 857,
    "threshold": 771
   },
   {
@@ -107,7 +107,7 @@
    "group_id": "soundbar",
    "status": "Duur",
    "best": 949.0,
-   "shop": "Coolblue.nl",
+   "shop": "EP.nl",
    "url": "https://www.kieskeurig.nl/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
    "diff_pct": 31.4,
    "avg2026": 722,
