@@ -22,7 +22,7 @@ zien wat nu een echte deal is. Je hebt er geen account voor nodig en je hoeft ne
 4. **Kopieer het bericht van Jasper.** Ga naar het bericht met je instelcode (de regel die
    begint met `BFDEALS:`). Houd het bericht vast en tik op **Kopieer**. Het hele bericht is prima.
 5. **Start BF Deals één keer.** Ga terug naar Scriptable en tik op **BF Deals**. Vraagt je iPhone
-   of Scriptable mag plakken, tik dan op **Sta plakken toe**. Je ziet "Klaar, Rebecca!". De app
+   of Scriptable mag plakken, tik dan op **Sta plakken toe**. Je ziet "All set, Rebecca!". De app
    heeft zichzelf ingesteld.
 6. **Zet de widget op je beginscherm.**
    - Houd je vinger op een lege plek van je beginscherm tot de apps gaan wiebelen.
@@ -35,17 +35,16 @@ Klaar. De widget ververst zichzelf; daarvoor hoef je niets te doen.
 
 ### De widget lezen
 
-- Per thema (bijvoorbeeld **Speakers**) zie je hoeveel deals er zijn, en maximaal 3 producten.
-- **Groen** = deal: minstens 10% onder de gemiddelde prijs van dit jaar.
-- **Lichtgroen** = scherp, **grijs** = normale prijs, **rood** = nu duur.
-- Het percentage is hoeveel de prijs nu afwijkt van het gemiddelde van dit jaar.
-- **Tik op de widget** voor het overzicht: alle producten, met de winkel, het gemiddelde en de
-  dealgrens. Tik op een product om de winkel te openen.
+- Per thema zie je de beste prijs groot, met het product eronder.
+- Een **groen percentage** = deal: minstens 10% onder de gemiddelde prijs van dit jaar.
+- **new** = net toegevoegd; er is nog geen gemiddelde.
+- **Tik op de widget** voor het overzicht: alle producten per thema, met de winkel en de prijs waaronder
+  het een deal is. Tik op een product om de winkel te openen.
 
 ### Kiezen welke thema's je ziet
 
-Tik op de widget › **Thema's kiezen**. Tik op een thema om het aan (✓) of uit (○) te zetten.
-Tik op **Klaar**.
+Tik op de widget › **Choose themes**. Tik op een thema om het aan (✓) of uit (○) te zetten.
+Tik op **Done**.
 
 ### Een product toevoegen
 
@@ -54,17 +53,17 @@ Je kunt elk product toevoegen, uit elke webwinkel.
 1. **Kopieer de link** van het product. In Safari: tik op de deelknop (vierkantje met pijl) ›
    **Kopieer**. In een winkel-app: **Deel** › **Kopieer link**. Weet je de link niet? Dan kun je
    straks ook gewoon de naam typen, bijvoorbeeld "Dyson V15 Detect Absolute".
-2. **Tik op de widget** en daarna op **＋ Product toevoegen**. De link staat er al in.
-   Wil je een kleur of maat? Zet die bij **Notitie**, bijvoorbeeld "zwart". Tik op **Verder**.
+2. **Tik op de widget** en daarna op **Add product**. De link staat er al in.
+   Wil je een kleur of maat? Zet die bij **Note**, bijvoorbeeld "zwart". Tik op **Next**.
 3. **Kies het thema.**
    - Tik op een bestaand thema, bijvoorbeeld **Speakers**.
-   - Of tik op **＋ Nieuw thema…** en typ een naam van één of twee woorden, bijvoorbeeld
+   - Of tik op **＋ New theme…** en typ een naam van één of twee woorden, bijvoorbeeld
      **Keuken** of **Fietsen**. Dat wordt een nieuwe kop in je widget.
-   - Of tik op **Laat BF Deals kiezen**.
+   - Of tik op **Let BF Deals choose**.
 4. **Kies voor wie.**
-   - **Alleen voor mij:** alleen jij ziet het, Jasper niet.
-   - **Gedeeld met Jasper:** jullie zien het allebei.
-5. Je ziet **Toegevoegd**. Uiterlijk de volgende ochtend staat het product in je widget.
+   - **Only me:** alleen jij ziet het, Jasper niet.
+   - **Shared with Jasper:** jullie zien het allebei.
+5. Je ziet **Added**. Meestal staat het product binnen een uur in je widget.
 
 De link vertelt BF Deals alleen wélk product je bedoelt. Daarna zoekt BF Deals de prijs in alle
 Nederlandse en Europese winkels die naar Amsterdam bezorgen, niet alleen in die ene winkel.
@@ -79,8 +78,8 @@ Stuur Jasper een berichtje. Dat regelt hij.
 
 ### Werkt iets niet?
 
-- **De widget zegt "tik om in te stellen":** doe stap 4 en 5 opnieuw.
-- **"Instelcode werkt niet meer":** vraag Jasper om een nieuw bericht met een instelcode. Doe dan
+- **De widget zegt "Tap to set up":** doe stap 4 en 5 opnieuw.
+- **"Setup code no longer works":** vraag Jasper om een nieuw bericht met een instelcode. Doe dan
   stap 4 en 5 opnieuw.
 - **De widget is leeg of oud:** open Scriptable één keer, of wacht even. Zonder internet laat hij
   de laatste stand zien.
@@ -115,7 +114,7 @@ real deal right now. You don't need an account and you don't log in anywhere.
 4. **Copy Jasper's message.** Go to the message with your setup code (the line starting with
    `BFDEALS:`). Press and hold the message and tap **Copy**. Copying the whole message is fine.
 5. **Run BF Deals once.** Go back to Scriptable and tap **BF Deals**. If your iPhone asks whether
-   Scriptable may paste, tap **Allow Paste**. You'll see "Klaar, Rebecca!" ("All set"). The app
+   Scriptable may paste, tap **Allow Paste**. You'll see "All set, Rebecca!". The app
    has set itself up.
 6. **Add the widget to your home screen.**
    - Press and hold an empty spot on your home screen until the apps jiggle.
@@ -126,24 +125,18 @@ real deal right now. You don't need an account and you don't log in anywhere.
 
 Done. The widget updates by itself.
 
-The app itself is in Dutch. The words you'll see most: *deal* = deal, *scherp* = good price,
-*normaal* = normal price, *duur* = expensive, *gedeeld* = shared, *alleen voor mij* = only for me,
-*thema* = theme, *toevoegen* = add, *annuleer* = cancel.
-
 ### Reading the widget
 
-- For each theme (for example **Speakers**) you see how many deals there are, and at most
-  3 products.
-- **Green** = deal: at least 10% below this year's average price.
-- **Light green** = good price, **grey** = normal price, **red** = expensive right now.
-- The percentage is how far today's price is from this year's average.
-- **Tap the widget** for the overview: every product with its shop, average price and deal
-  threshold. Tap a product to open the shop.
+- For each theme you see the best price in large type, with the product below it.
+- A **green percentage** = deal: at least 10% below this year's average price.
+- **new** = just added; there's no average yet.
+- **Tap the widget** for the overview: every product per theme, with the shop and the price below
+  which it's a deal. Tap a product to open the shop.
 
 ### Choosing which themes you see
 
-Tap the widget › **Thema's kiezen** (choose themes). Tap a theme to switch it on (✓) or off (○).
-Tap **Klaar** (done).
+Tap the widget › **Choose themes**. Tap a theme to switch it on (✓) or off (○).
+Tap **Done**.
 
 ### Adding a product
 
@@ -152,18 +145,18 @@ You can add any product, from any online shop.
 1. **Copy the product link.** In Safari: tap the share button (square with an arrow) › **Copy**.
    In a shop's app: **Share** › **Copy Link**. No link? You can also just type the name later,
    for example "Dyson V15 Detect Absolute".
-2. **Tap the widget**, then **＋ Product toevoegen** (add product). The link is already filled in.
-   Want a specific colour or size? Put it under **Notitie** (note), for example "black". Tap
-   **Verder** (next).
+2. **Tap the widget**, then **Add product**. The link is already filled in.
+   Want a specific colour or size? Put it under **Note**, for example "black". Tap
+   **Next**.
 3. **Pick the theme.**
    - Tap an existing theme, for example **Speakers**.
-   - Or tap **＋ Nieuw thema…** (new theme) and type a name of one or two words, for example
+   - Or tap **＋ New theme…** and type a name of one or two words, for example
      **Kitchen** or **Bikes**. That becomes a new heading in your widget.
-   - Or tap **Laat BF Deals kiezen** (let BF Deals choose).
+   - Or tap **Let BF Deals choose**.
 4. **Choose who sees it.**
-   - **Alleen voor mij** (only for me): only you see it, Jasper doesn't.
-   - **Gedeeld met Jasper** (shared with Jasper): you both see it.
-5. You'll see **Toegevoegd** (added). By the next morning at the latest, the product is in your
+   - **Only me**: only you see it, Jasper doesn't.
+   - **Shared with Jasper**: you both see it.
+5. You'll see **Added**. Usually within an hour, the product is in your
    widget.
 
 The link only tells BF Deals *which* product you mean. BF Deals then looks for the price in all
@@ -179,8 +172,8 @@ He'll take care of it.
 
 ### Something not working?
 
-- **The widget says "tik om in te stellen" (tap to set up):** repeat steps 4 and 5.
-- **"Instelcode werkt niet meer" (setup code no longer works):** ask Jasper for a new message with
+- **The widget says "Tap to set up":** repeat steps 4 and 5.
+- **"Setup code no longer works":** ask Jasper for a new message with
   a setup code. Then repeat steps 4 and 5.
 - **The widget is empty or out of date:** open Scriptable once, or wait a little. Without internet
   it shows the last prices it had.

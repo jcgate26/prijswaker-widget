@@ -11,18 +11,18 @@
   },
   {
    "id": "pan",
-   "short": "Pannen",
+   "short": "Pans",
    "title": "Demeyere Apollo 7"
   },
   {
    "id": "skinmask",
    "short": "Skin mask",
-   "title": "LED-maskers voor de huid"
+   "title": "LED face masks"
   },
   {
    "id": "sad",
    "short": "SAD light",
-   "title": "Daglichtlampen"
+   "title": "Light therapy lamps"
   }
  ],
  "items": [
@@ -30,7 +30,7 @@
    "product": "shark_cryoglow",
    "name": "Shark CryoGlow",
    "full_name": "Shark CryoGlow LED-masker met Under-Eye-Cooling (FW312EU)",
-   "group": "LED-maskers voor de huid",
+   "group": "LED face masks",
    "group_id": "skinmask",
    "status": "Deal",
    "best": 199.0,
@@ -165,7 +165,7 @@
    "product": "cb_series2",
    "name": "CurrentBody S2",
    "full_name": "CurrentBody Skin LED Light Therapy Mask Series 2",
-   "group": "LED-maskers voor de huid",
+   "group": "LED face masks",
    "group_id": "skinmask",
    "status": "Geen prijs",
    "best": 449.99,
@@ -180,7 +180,7 @@
    "product": "cb_series3",
    "name": "CurrentBody S3",
    "full_name": "CurrentBody Skin LED Light Therapy Mask Series 3",
-   "group": "LED-maskers voor de huid",
+   "group": "LED face masks",
    "group_id": "skinmask",
    "status": "Geen prijs",
    "best": 589.99,
@@ -195,7 +195,7 @@
    "product": "theraface_glo",
    "name": "TheraFace Glo",
    "full_name": "Therabody TheraFace Mask Glo",
-   "group": "LED-maskers voor de huid",
+   "group": "LED face masks",
    "group_id": "skinmask",
    "status": "Geen prijs",
    "best": 289.0,
@@ -210,7 +210,7 @@
    "product": "beurer_tl85",
    "name": "Beurer TL 85",
    "full_name": "Beurer TL 85 daglichtlamp",
-   "group": "Daglichtlampen",
+   "group": "Light therapy lamps",
    "group_id": "sad",
    "status": "Geen prijs",
    "best": 139.99,
@@ -225,7 +225,7 @@
    "product": "innolux_mesa_mega",
    "name": "Mesa Mega",
    "full_name": "Innolux Mesa Mega LED daglichtlamp (703280L)",
-   "group": "Daglichtlampen",
+   "group": "Light therapy lamps",
    "group_id": "sad",
    "status": "Geen prijs",
    "best": null,
@@ -240,7 +240,7 @@
    "product": "innolux_supernova",
    "name": "Supernova",
    "full_name": "Innolux Supernova LED daglichtlamp",
-   "group": "Daglichtlampen",
+   "group": "Light therapy lamps",
    "group_id": "sad",
    "status": "Geen prijs",
    "best": null,
