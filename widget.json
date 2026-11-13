@@ -18,6 +18,11 @@
    "id": "skinmask",
    "short": "Skin mask",
    "title": "LED-maskers voor de huid"
+  },
+  {
+   "id": "sad",
+   "short": "SAD light",
+   "title": "Daglichtlampen"
   }
  ],
  "items": [
@@ -29,8 +34,8 @@
    "group_id": "skinmask",
    "status": "Deal",
    "best": 199.0,
-   "shop": "SharkNinja NL",
-   "url": "https://www.sharkninja.nl/shark-cryoglow-led-masker-met-under-eye-cooling-ijsblauw/FW312EU.html",
+   "shop": "SharkNinja.nl",
+   "url": "https://www.kieskeurig.nl/gezichtsverzorgingstool/product/52125933-shark-cryoglow-huidverzorgingapparatuur-lichttherapie-voor-de-huid-lila",
    "diff_pct": -31.5,
    "avg2026": 290,
    "threshold": 261,
@@ -185,6 +190,66 @@
    "avg2026": null,
    "threshold": null,
    "owner": "gedeeld"
+  },
+  {
+   "product": "theraface_glo",
+   "name": "TheraFace Glo",
+   "full_name": "Therabody TheraFace Mask Glo",
+   "group": "LED-maskers voor de huid",
+   "group_id": "skinmask",
+   "status": "Geen prijs",
+   "best": 289.0,
+   "shop": "Coolblue",
+   "url": "https://www.coolblue.nl/product/970529/therabody-theraface-mask-glo.html",
+   "diff_pct": null,
+   "avg2026": null,
+   "threshold": null,
+   "owner": "gedeeld"
+  },
+  {
+   "product": "beurer_tl85",
+   "name": "Beurer TL 85",
+   "full_name": "Beurer TL 85 daglichtlamp",
+   "group": "Daglichtlampen",
+   "group_id": "sad",
+   "status": "Geen prijs",
+   "best": 139.99,
+   "shop": "Kruidvat",
+   "url": "https://www.kruidvat.nl/beurer-tl-85-daglichtlamp/p/mp-00030381",
+   "diff_pct": null,
+   "avg2026": null,
+   "threshold": null,
+   "owner": "jasper"
+  },
+  {
+   "product": "innolux_mesa_mega",
+   "name": "Mesa Mega",
+   "full_name": "Innolux Mesa Mega LED daglichtlamp (703280L)",
+   "group": "Daglichtlampen",
+   "group_id": "sad",
+   "status": "Geen prijs",
+   "best": null,
+   "shop": null,
+   "url": null,
+   "diff_pct": null,
+   "avg2026": null,
+   "threshold": null,
+   "owner": "jasper"
+  },
+  {
+   "product": "innolux_supernova",
+   "name": "Supernova",
+   "full_name": "Innolux Supernova LED daglichtlamp",
+   "group": "Daglichtlampen",
+   "group_id": "sad",
+   "status": "Geen prijs",
+   "best": null,
+   "shop": null,
+   "url": null,
+   "diff_pct": null,
+   "avg2026": null,
+   "threshold": null,
+   "owner": "jasper"
   }
  ]
 }
