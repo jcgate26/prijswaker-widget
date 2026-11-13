@@ -2,7 +2,7 @@
  "name": "BF Deals",
  "updated": "2026-11-13",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
- "deals": 2,
+ "deals": 3,
  "groups": [
   {
    "id": "soundbar",
@@ -13,9 +13,29 @@
    "id": "pan",
    "short": "Pannen",
    "title": "Demeyere Apollo 7"
+  },
+  {
+   "id": "skinmask",
+   "short": "Skin mask",
+   "title": "LED-maskers voor de huid"
   }
  ],
  "items": [
+  {
+   "product": "shark_cryoglow",
+   "name": "Shark CryoGlow",
+   "full_name": "Shark CryoGlow LED-masker met Under-Eye-Cooling (FW312EU)",
+   "group": "LED-maskers voor de huid",
+   "group_id": "skinmask",
+   "status": "Deal",
+   "best": 199.0,
+   "shop": "SharkNinja NL",
+   "url": "https://www.sharkninja.nl/shark-cryoglow-led-masker-met-under-eye-cooling-ijsblauw/FW312EU.html",
+   "diff_pct": -31.5,
+   "avg2026": 290,
+   "threshold": 261,
+   "owner": "gedeeld"
+  },
   {
    "product": "apollo_20",
    "name": "Apollo 20 cm",
@@ -134,6 +154,36 @@
    "diff_pct": 31.4,
    "avg2026": 722,
    "threshold": 650,
+   "owner": "gedeeld"
+  },
+  {
+   "product": "cb_series2",
+   "name": "CurrentBody S2",
+   "full_name": "CurrentBody Skin LED Light Therapy Mask Series 2",
+   "group": "LED-maskers voor de huid",
+   "group_id": "skinmask",
+   "status": "Geen prijs",
+   "best": 449.99,
+   "shop": "CurrentBody NL",
+   "url": "https://www.currentbody.nl/products/currentbody-skin-led-light-therapy-mask-series-2",
+   "diff_pct": null,
+   "avg2026": null,
+   "threshold": null,
+   "owner": "gedeeld"
+  },
+  {
+   "product": "cb_series3",
+   "name": "CurrentBody S3",
+   "full_name": "CurrentBody Skin LED Light Therapy Mask Series 3",
+   "group": "LED-maskers voor de huid",
+   "group_id": "skinmask",
+   "status": "Geen prijs",
+   "best": 589.99,
+   "shop": "CurrentBody NL",
+   "url": "https://www.currentbody.nl/products/currentbody-skin-led-light-therapy-mask",
+   "diff_pct": null,
+   "avg2026": null,
+   "threshold": null,
    "owner": "gedeeld"
   }
  ]
