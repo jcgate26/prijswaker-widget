@@ -135,7 +135,7 @@ function layout(family) {
 // Each tile is drawn as a transparent image (border + text only). Home screens in tinted or
 // black-and-white mode turn widget shapes into solid white; a transparent image keeps only its
 // lines and letters, so the tiles stay readable in every home screen style.
-const CORE_VERSION = "v9";
+const CORE_VERSION = "v10";
 
 function canvas(w, h) {
   const ctx = new DrawContext();
@@ -354,18 +354,63 @@ async function ask(title, message, actions, cancel = "Annuleer") {
   return await a.present();
 }
 
+// Setup code, sent by the other person in one message: BFDEALS:<who>:<key>. Copying the whole message
+// and opening the app is enough; the app finds the code on the clipboard and sets itself up.
+const SETUP_RE = /BFDEALS:(jasper|rebecca):(github_pat_[A-Za-z0-9_]{20,})/;
+const DOC_URL = "https://github.com/jcgate26/prijswaker-widget/blob/main/INSTALLEREN.md";
+
+async function trySetupFromClipboard(S) {
+  let clip = "";
+  try { clip = Pasteboard.pasteString() || ""; } catch (e) { return false; }
+  const m = clip.match(SETUP_RE);
+  if (!m) return false;
+  S.who = m[1];
+  saveSettings(S);
+  Keychain.set(KEY_NAME, m[2]);
+  try { Pasteboard.copyString(""); } catch (e) { /* leave the clipboard */ }
+  await ask(`Klaar, ${NAMES[S.who]}!`, `BF Deals is ingesteld. Zet nu de widget op je beginscherm.\n\nAll set! Now add the widget to your home screen.`, ["OK"], null);
+  return true;
+}
+
 async function askKey(S) {
+  if (await trySetupFromClipboard(S)) return Keychain.get(KEY_NAME);
   const a = new Alert();
-  a.title = "Sleutel voor toevoegen";
-  a.message = "Plak de sleutel die je van Jasper kreeg (begint met github_pat_). Je hoeft dit maar één keer te doen.";
-  a.addSecureTextField("github_pat_…", "");
+  a.title = "Instelcode";
+  a.message = `Plak de instelcode uit het bericht van ${S.who ? OTHER[S.who] : "Jasper"} (begint met BFDEALS:). Je hoeft dit maar één keer te doen.`;
+  a.addSecureTextField("BFDEALS:…", "");
   a.addAction("Bewaar");
   a.addCancelAction("Annuleer");
   if ((await a.present()) === -1) return null;
-  const key = a.textFieldValue(0).trim();
-  if (!key) return null;
+  const text = a.textFieldValue(0).trim();
+  const m = text.match(SETUP_RE);
+  const key = m ? m[2] : /^github_pat_\w{20,}$/.test(text) ? text : null;
+  if (!key) {
+    await ask("Dat is geen instelcode", "Kopieer het hele bericht met de code en probeer het opnieuw.", ["OK"], null);
+    return null;
+  }
+  if (m && !S.who) { S.who = m[1]; saveSettings(S); }
   Keychain.set(KEY_NAME, key);
   return key;
+}
+
+// Make a setup code for the other person and send it (WhatsApp, Berichten, ...) via the share sheet.
+async function invite(S) {
+  const other = S.who === "rebecca" ? "jasper" : "rebecca";
+  const a = new Alert();
+  a.title = `${NAMES[other]} uitnodigen`;
+  a.message = `Plak de sleutel die je op github.com voor ${NAMES[other]} hebt gemaakt (begint met github_pat_). Daarna kies je hoe je hem verstuurt.`;
+  a.addSecureTextField("github_pat_…", "");
+  a.addAction("Maak bericht");
+  a.addCancelAction("Annuleer");
+  if ((await a.present()) === -1) return;
+  const key = a.textFieldValue(0).trim();
+  if (!/^github_pat_\w{20,}$/.test(key)) {
+    await ask("Dat is geen sleutel", "Een sleutel begint met github_pat_. Kopieer hem opnieuw op github.com.", ["OK"], null);
+    return;
+  }
+  const msg = `Hoi ${NAMES[other]}! Hier is BF Deals voor je iPhone. Uitleg (Nederlands + English):\n${DOC_URL}\n\n`
+    + `Je persoonlijke instelcode, niet doorsturen / your personal setup code, don't share:\nBFDEALS:${other}:${key}`;
+  await ShareSheet.present([msg]);
 }
 
 async function addProduct(S, presetUrl) {
@@ -385,18 +430,37 @@ async function addProduct(S, presetUrl) {
   a.message = "Een link uit een willekeurige winkel of de naam van het product. BF Deals zoekt het product daarna overal op, niet alleen in die winkel.";
   a.addTextField("Link of productnaam", preset);
   a.addTextField("Notitie, bijv. kleur (mag leeg)", "");
-  a.addAction("Alleen voor mij");
-  a.addAction(`Gedeeld met ${OTHER[S.who]}`);
+  a.addAction("Verder");
   a.addCancelAction("Annuleer");
-  const choice = await a.present();
-  if (choice === -1) return false;
+  if ((await a.present()) === -1) return false;
   const product = a.textFieldValue(0).replace(/\s+/g, " ").trim();
   const note = a.textFieldValue(1).replace(/\s+/g, " ").trim();
   if (product.length < 3) {
     await ask("Niets toegevoegd", "Vul een link of productnaam in.", ["OK"], null);
     return false;
   }
-  const owner = choice === 0 ? S.who : "gedeeld";
+
+  // Theme: one of the themes you can see, a new one, or let the round pick.
+  const themes = data ? groupsOf(data).filter((g) => data.items.some((i) => inGroup(i, g) && canSee(i, S))).map((g) => g.short || g.title) : [];
+  const ti = await ask("Bij welk thema?", "Kies een bestaand thema of maak een nieuw thema, bijvoorbeeld Keuken of Fietsen.",
+    [...themes, "＋ Nieuw thema…", "Laat BF Deals kiezen"]);
+  if (ti === -1) return false;
+  let theme = ti < themes.length ? themes[ti] : "";
+  if (ti === themes.length) {
+    const n = new Alert();
+    n.title = "Nieuw thema";
+    n.message = "Eén of twee woorden. Dit wordt de kop in je widget.";
+    n.addTextField("Bijv. Keuken", "");
+    n.addAction("Maak thema");
+    n.addCancelAction("Annuleer");
+    if ((await n.present()) === -1) return false;
+    theme = n.textFieldValue(0).replace(/[^\p{L}\p{N} &-]/gu, "").replace(/\s+/g, " ").trim().slice(0, 24);
+  }
+
+  const wi = await ask("Voor wie?", `Alleen voor jou: ${OTHER[S.who]} ziet het niet. Gedeeld: jullie zien het allebei.`,
+    ["Alleen voor mij", `Gedeeld met ${OTHER[S.who]}`]);
+  if (wi === -1) return false;
+  const owner = wi === 0 ? S.who : "gedeeld";
   const req = new Request(`https://api.github.com/repos/${REPO}/issues`);
   req.method = "POST";
   req.timeoutInterval = 20;
@@ -404,7 +468,7 @@ async function addProduct(S, presetUrl) {
     "Content-Type": "application/json", "X-GitHub-Api-Version": "2022-11-28" };
   req.body = JSON.stringify({
     title: `BF Deals: nieuw product (${NAMES[S.who]})`,
-    body: `wie: ${owner}\nproduct: ${product}\nnotitie: ${note}\n\nAangevraagd in de BF Deals-widget door ${NAMES[S.who]}.`,
+    body: `wie: ${owner}\nproduct: ${product}\nthema: ${theme}\nnotitie: ${note}\n\nAangevraagd in de BF Deals-widget door ${NAMES[S.who]}.`,
   });
   let status = 0;
   try {
@@ -412,12 +476,12 @@ async function addProduct(S, presetUrl) {
     status = req.response ? req.response.statusCode : 0;
   } catch (e) { status = -1; }
   if (status === 201) {
-    await ask("Toegevoegd", `${owner === "gedeeld" ? `Gedeeld met ${OTHER[S.who]}` : "Alleen voor jou"}. BF Deals zoekt het product nu op; over ongeveer 20 minuten staat het in je widget.`, ["OK"], null);
+    await ask("Toegevoegd", `${owner === "gedeeld" ? `Gedeeld met ${OTHER[S.who]}` : "Alleen voor jou"}${theme ? `, thema ${theme}` : ""}. BF Deals zoekt het product op in alle winkels; uiterlijk morgenochtend staat het in je widget.`, ["OK"], null);
     return true;
   }
   if (status === 401 || status === 403 || status === 404) {
     Keychain.remove(KEY_NAME);
-    await ask("Sleutel werkt niet", "De sleutel is verlopen of klopt niet. Vraag Jasper om een nieuwe en probeer het opnieuw.", ["OK"], null);
+    await ask("Instelcode werkt niet meer", `De code is verlopen of ingetrokken. Vraag ${OTHER[S.who]} om een nieuwe instelcode en probeer het opnieuw.`, ["OK"], null);
   } else {
     await ask("Niet gelukt", "Geen verbinding met GitHub. Probeer het straks opnieuw.", ["OK"], null);
   }
@@ -546,11 +610,12 @@ function detailScreen(data, S, groupId, productId) {
 
     action("＋  Product toevoegen", "Plak een link uit een winkel; ook via Deel › Scriptable in Safari", C.green, () => addProduct(S));
     action("Thema's kiezen", "Welke thema's je widget laat zien", C.text, () => { mode = "themes"; });
-    action(S.who ? `Ik ben ${NAMES[S.who]} · wisselen` : "Wie ben je?", Keychain.contains(KEY_NAME) ? "Sleutel voor toevoegen is ingesteld" : "Nog geen sleutel voor toevoegen", C.muted, async () => {
-      const i = await ask("Instellingen", null, ["Jasper", "Rebecca", "Sleutel vervangen"], "Annuleer");
+    action(S.who ? `Ik ben ${NAMES[S.who]} · wisselen` : "Wie ben je?", Keychain.contains(KEY_NAME) ? "Toevoegen is ingesteld" : "Toevoegen nog niet ingesteld (instelcode nodig)", C.muted, async () => {
+      const i = await ask("Instellingen", null, ["Ik ben Jasper", "Ik ben Rebecca", "Instelcode opnieuw plakken"], "Annuleer");
       if (i === 0 || i === 1) { S.who = i === 0 ? "jasper" : "rebecca"; saveSettings(S); }
       if (i === 2) await askKey(S);
     });
+    if (S.who === "jasper") action(`${OTHER[S.who]} uitnodigen`, `Stuur ${OTHER[S.who]} een bericht met de uitleg en een instelcode`, C.muted, () => invite(S));
     action("Volledig dashboard openen ↗", "Grafieken, alle winkels en het advies per product", C.green, () => Safari.open(data.dashboard));
     table.reload();
   };
@@ -570,6 +635,7 @@ if (config.runsInWidget) {
   await addProduct(S, shared && shared[0]);
 } else if (data) {
   const q = args.queryParameters || {};
+  if (!S.who || !Keychain.contains(KEY_NAME)) await trySetupFromClipboard(S);
   if (!S.who) await askWho(S);
   if (q.action === "add") await addProduct(S);
   await detailScreen(data, S, q.group, q.product).present(false);
