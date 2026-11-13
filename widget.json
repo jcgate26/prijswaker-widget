@@ -5,8 +5,8 @@
  "groups": [
   {
    "id": "soundbar",
-   "short": "Soundbars",
-   "title": "Soundbars"
+   "short": "Speakers",
+   "title": "Speakers"
   },
   {
    "id": "pan",
@@ -33,7 +33,7 @@
    "product": "flexus_300",
    "name": "Flexus Core 300",
    "full_name": "Klipsch Flexus Core 300",
-   "group": "Soundbars",
+   "group": "Speakers",
    "group_id": "soundbar",
    "status": "Deal",
    "best": 899.0,
@@ -61,7 +61,7 @@
    "product": "beam_ultra",
    "name": "Beam Ultra",
    "full_name": "Sonos Beam Ultra",
-   "group": "Soundbars",
+   "group": "Speakers",
    "group_id": "soundbar",
    "status": "Normaal",
    "best": 698.95,
@@ -89,7 +89,7 @@
    "product": "arc_ultra",
    "name": "Arc Ultra",
    "full_name": "Sonos Arc Ultra",
-   "group": "Soundbars",
+   "group": "Speakers",
    "group_id": "soundbar",
    "status": "Duur",
    "best": 999.0,
@@ -103,7 +103,7 @@
    "product": "enchant_1100",
    "name": "Enchant 1100",
    "full_name": "Harman Kardon Enchant 1100",
-   "group": "Soundbars",
+   "group": "Speakers",
    "group_id": "soundbar",
    "status": "Duur",
    "best": 949.0,
@@ -112,6 +112,20 @@
    "diff_pct": 31.4,
    "avg2026": 722,
    "threshold": 650
+  },
+  {
+   "product": "lifestyle_ultra",
+   "name": "Lifestyle Ultra",
+   "full_name": "Bose Lifestyle Ultra Soundbar",
+   "group": "Speakers",
+   "group_id": "soundbar",
+   "status": "Geen prijs",
+   "best": 999.0,
+   "shop": "Coolblue",
+   "url": "https://www.coolblue.nl/product/978495/bose-lifestyle-ultra-soundbar-zwart.html",
+   "diff_pct": null,
+   "avg2026": null,
+   "threshold": null
   }
  ]
 }
