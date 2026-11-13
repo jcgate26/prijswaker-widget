@@ -21,8 +21,9 @@ zien wat nu een echte deal is. Je hebt er geen account voor nodig en je hoeft ne
    **BF Deals**. Tik op **Gereed**.
 4. **Kopieer het bericht van Jasper.** Ga naar het bericht met je instelcode (de regel die
    begint met `BFDEALS:`). Houd het bericht vast en tik op **Kopieer**. Het hele bericht is prima.
-5. **Start BF Deals één keer.** Ga terug naar Scriptable en tik op **BF Deals**. Je ziet
-   "Klaar, Rebecca!". De app heeft zichzelf ingesteld.
+5. **Start BF Deals één keer.** Ga terug naar Scriptable en tik op **BF Deals**. Vraagt je iPhone
+   of Scriptable mag plakken, tik dan op **Sta plakken toe**. Je ziet "Klaar, Rebecca!". De app
+   heeft zichzelf ingesteld.
 6. **Zet de widget op je beginscherm.**
    - Houd je vinger op een lege plek van je beginscherm tot de apps gaan wiebelen.
    - Tik linksboven op **Wijzig** en dan op **Voeg widget toe**.
@@ -113,8 +114,9 @@ real deal right now. You don't need an account and you don't log in anywhere.
    **BF Deals**. Tap **Done**.
 4. **Copy Jasper's message.** Go to the message with your setup code (the line starting with
    `BFDEALS:`). Press and hold the message and tap **Copy**. Copying the whole message is fine.
-5. **Run BF Deals once.** Go back to Scriptable and tap **BF Deals**. You'll see
-   "Klaar, Rebecca!" ("All set"). The app has set itself up.
+5. **Run BF Deals once.** Go back to Scriptable and tap **BF Deals**. If your iPhone asks whether
+   Scriptable may paste, tap **Allow Paste**. You'll see "Klaar, Rebecca!" ("All set"). The app
+   has set itself up.
 6. **Add the widget to your home screen.**
    - Press and hold an empty spot on your home screen until the apps jiggle.
    - Tap **Edit** at the top left, then **Add Widget**.
