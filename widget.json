@@ -1,4 +1,5 @@
 {
+ "name": "BF Deals",
  "updated": "2026-11-13",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 2,
@@ -27,7 +28,8 @@
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o20-cm-2-l/9200000005802359/",
    "diff_pct": -14.9,
    "avg2026": 140,
-   "threshold": 126
+   "threshold": 126,
+   "owner": "jasper"
   },
   {
    "product": "flexus_300",
@@ -41,7 +43,8 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/52151405-klipsch-flexus-core-300-zwart-5-1-2-kanalen",
    "diff_pct": -11.2,
    "avg2026": 1013,
-   "threshold": 911
+   "threshold": 911,
+   "owner": "gedeeld"
   },
   {
    "product": "apollo_28",
@@ -55,7 +58,8 @@
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
    "diff_pct": -1.0,
    "avg2026": 183,
-   "threshold": 165
+   "threshold": 165,
+   "owner": "jasper"
   },
   {
    "product": "lifestyle_ultra",
@@ -69,7 +73,8 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/52197797-bose-lifestyle-ultra-soundbar-zwart",
    "diff_pct": 0.1,
    "avg2026": 998,
-   "threshold": 899
+   "threshold": 899,
+   "owner": "gedeeld"
   },
   {
    "product": "beam_ultra",
@@ -83,7 +88,8 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/57043127-sonos-beam-ultra-zwart-7-1-2-kanalen",
    "diff_pct": 0.5,
    "avg2026": 695,
-   "threshold": 626
+   "threshold": 626,
+   "owner": "gedeeld"
   },
   {
    "product": "apollo_24",
@@ -97,7 +103,8 @@
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o24-cm-3-3-l/9200000005802401/",
    "diff_pct": 4.0,
    "avg2026": 174,
-   "threshold": 157
+   "threshold": 157,
+   "owner": "jasper"
   },
   {
    "product": "arc_ultra",
@@ -111,7 +118,8 @@
    "url": "https://www.kieskeurig.be/soundbar/product/51533037-sonos-arc-ultra-wit",
    "diff_pct": 10.4,
    "avg2026": 857,
-   "threshold": 771
+   "threshold": 771,
+   "owner": "gedeeld"
   },
   {
    "product": "enchant_1100",
@@ -125,7 +133,8 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
    "diff_pct": 31.4,
    "avg2026": 722,
-   "threshold": 650
+   "threshold": 650,
+   "owner": "gedeeld"
   }
  ]
 }
