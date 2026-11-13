@@ -27,13 +27,13 @@ function loadSettings() {
   try {
     if (fm.fileExists(settingsPath)) {
       const s = JSON.parse(fm.readString(settingsPath));
-      return { who: NAMES[s.who] ? s.who : null, hidden: Array.isArray(s.hidden) ? s.hidden : [] };
+      return { who: NAMES[s.who] ? s.who : null, hidden: Array.isArray(s.hidden) ? s.hidden : [], lastAdd: Number(s.lastAdd) || 0 };
     }
   } catch (e) { /* damaged file: start fresh */ }
   return { who: null, hidden: [] };
 }
 function saveSettings(S) {
-  fm.writeString(settingsPath, JSON.stringify({ who: S.who, hidden: S.hidden }));
+  fm.writeString(settingsPath, JSON.stringify({ who: S.who, hidden: S.hidden, lastAdd: S.lastAdd || 0 }));
 }
 
 // Shared products for everyone; your own only for you. Before you say who you are: shared only.
@@ -135,7 +135,7 @@ function layout(family) {
 // Each tile is drawn as a transparent image (border + text only). Home screens in tinted or
 // black-and-white mode turn widget shapes into solid white; a transparent image keeps only its
 // lines and letters, so the tiles stay readable in every home screen style.
-const CORE_VERSION = "v10";
+const CORE_VERSION = "v11";
 
 function canvas(w, h) {
   const ctx = new DrawContext();
@@ -270,7 +270,10 @@ function planRows(L, sections, withLabels) {
 function buildWidget(data, family, param, S) {
   const w = new ListWidget();
   w.backgroundColor = C.bg;
-  w.refreshAfterDate = new Date(Date.now() + 60 * 60 * 1000);
+  // Ask iOS for a fresh widget every 15 minutes, so new products and prices (also ones the other
+  // person added) show up soon. Right after you added a product: every 5 minutes for 2 hours.
+  const justAdded = S && S.lastAdd && Date.now() - S.lastAdd < 2 * 60 * 60 * 1000;
+  w.refreshAfterDate = new Date(Date.now() + (justAdded ? 5 : 15) * 60 * 1000);
   if (!data) {
     const t = w.addText("BF Deals: nog geen gegevens");
     t.textColor = C.muted;
@@ -476,7 +479,9 @@ async function addProduct(S, presetUrl) {
     status = req.response ? req.response.statusCode : 0;
   } catch (e) { status = -1; }
   if (status === 201) {
-    await ask("Toegevoegd", `${owner === "gedeeld" ? `Gedeeld met ${OTHER[S.who]}` : "Alleen voor jou"}${theme ? `, thema ${theme}` : ""}. BF Deals zoekt het product op in alle winkels; uiterlijk morgenochtend staat het in je widget.`, ["OK"], null);
+    S.lastAdd = Date.now();
+    saveSettings(S);
+    await ask("Toegevoegd", `${owner === "gedeeld" ? `Gedeeld met ${OTHER[S.who]}` : "Alleen voor jou"}${theme ? `, thema ${theme}` : ""}. BF Deals zoekt het product nu op in alle winkels; meestal staat het binnen een uur in je widget.`, ["OK"], null);
     return true;
   }
   if (status === 401 || status === 403 || status === 404) {
