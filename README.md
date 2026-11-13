@@ -7,58 +7,33 @@ door de dagelijkse prijsronde.
 
 Je hebt geen Claude of ChatGPT nodig: alleen de gratis app Scriptable.
 
-## Installeren (eenmalig, ongeveer 3 minuten)
+## Installeren
 
-1. Installeer **Scriptable** uit de App Store (gratis).
-2. Open deze link in Safari:
-   https://raw.githubusercontent.com/jcgate26/prijswaker-widget/main/Prijswaker.js
-   Houd je vinger op de tekst, kies **Selecteer alles** en dan **Kopieer**.
-3. Open Scriptable en tik rechtsboven op **+**. Plak de tekst. Tik bovenaan op de naam en noem het
-   script **BF Deals**.
-4. Tik onderaan op het schuifjes-icoon (Script Settings) en zet bij **Share Sheet Inputs**
-   een vinkje bij **URLs**. Dan kun je straks vanuit Safari producten toevoegen. Tik op **Gereed**.
-5. Tik op het script om het te starten. Kies **Wie ben je?** › Jasper of Rebecca.
-6. Ga naar je beginscherm. Houd je vinger op een lege plek › **Wijzig** › **Voeg widget toe** ›
-   **Scriptable**. Kies klein, middel of groot en zet hem neer.
-7. Houd de widget ingedrukt › **Wijzig widget** › bij **Script** kies **BF Deals**.
+De stap-voor-stap-uitleg (Nederlands en English) staat in [INSTALLEREN.md](INSTALLEREN.md).
+Die is ook voor Rebecca: zij heeft alleen Scriptable nodig, geen account.
 
-## Thema's kiezen
+## Jasper: Rebecca uitnodigen (eenmalig)
 
-Tik op de widget › **Thema's kiezen**. Tik op een thema om het aan of uit te zetten
-(bijvoorbeeld Pannen uit, Speakers aan). Tik op **Klaar**. Je ziet alleen thema's waarin
-producten staan die voor jou zichtbaar zijn.
+Om producten te kunnen toevoegen, heeft de widget een **sleutel** nodig. Dat is een soort
+wachtwoord waarmee de widget alleen een productverzoek in jouw GitHub-postvak kan leggen. Rebecca
+krijgt daarmee géén toegang tot je GitHub en hoeft nergens in te loggen. Ze krijgt van jou één
+bericht met een instelcode; de widget doet de rest.
 
-Wil je een aparte widget voor één thema: houd de widget ingedrukt › **Wijzig widget** › typ bij
-**Parameter** de naam van het thema, bijvoorbeeld `Speakers`.
+1. Open op je computer https://github.com/settings/personal-access-tokens/new (ingelogd als jij).
+2. **Token name:** `BF Deals Rebecca`. **Expiration:** kies Custom en een datum over een jaar.
+3. **Repository access:** kies **Only select repositories** en dan `prijswaker`.
+4. **Permissions:** tik op **Add permissions**, kies **Issues** en zet hem op **Read and write**.
+   Verder niets.
+5. Tik op **Generate token** en kopieer de sleutel (begint met `github_pat_`). Zet hem op je
+   telefoon, bijvoorbeeld via Notities.
+6. Op je iPhone: tik op je BF Deals-widget › **Rebecca uitnodigen** › plak de sleutel ›
+   **Maak bericht** › kies WhatsApp of Berichten › Rebecca.
 
-## Een product toevoegen
+Voor jezelf maak je op dezelfde manier een sleutel `BF Deals Jasper`. Tik dan op de widget ›
+**Ik ben Jasper · wisselen** › **Instelcode opnieuw plakken** en plak hem.
 
-Eerst één keer de **sleutel** instellen. Jasper maakt hem en stuurt hem je (zie hieronder).
-De eerste keer dat je iets toevoegt, vraagt de widget erom; plakken en klaar.
-
-Daarna kan het op twee manieren:
-
-- **Vanuit Safari (makkelijkst):** open het product in een webwinkel (Coolblue, bol, MediaMarkt,
-  wat je wilt) › deelknop › **Scriptable** › **BF Deals**.
-- **In de app:** kopieer de link, tik op de widget › **＋ Product toevoegen**. De link staat er
-  al in. Je mag ook gewoon de naam typen, bijvoorbeeld `Dyson V15 Detect Absolute`.
-
-Kies dan **Alleen voor mij** of **Gedeeld met …**. Vul eventueel een notitie in, bijvoorbeeld
-een kleur. De link vertelt alleen welk product je bedoelt: BF Deals zoekt het daarna in alle
-Nederlandse en Europese winkels die naar Amsterdam bezorgen. Na ongeveer 20 minuten staat het
-in je widget.
-
-## De sleutel maken (Jasper, eenmalig per persoon)
-
-1. Ga op github.com naar **Settings › Developer settings › Personal access tokens ›
-   Fine-grained tokens › Generate new token**.
-2. Naam: `BF Deals – Rebecca` (of `– Jasper`). Kies een looptijd, bijvoorbeeld 1 jaar.
-3. **Repository access:** Only select repositories › `jcgate26/prijswaker`.
-4. **Permissions › Repository permissions › Issues:** Read and write. Verder niets.
-5. **Generate token**, kopieer hem en stuur hem naar Rebecca (of plak hem zelf in je widget).
-
-Met deze sleutel kun je alleen productverzoeken (issues) indienen en bekijken. Hij kan geen code
-of prijsgegevens lezen of wijzigen. Kwijt of verlopen: maak een nieuwe en trek de oude in.
+Een sleutel intrekken kan op dezelfde GitHub-pagina (Fine-grained tokens). De widget vraagt dan
+om een nieuwe instelcode.
 
 ## Kleuren
 
