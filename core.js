@@ -2,7 +2,7 @@
 // to change the look. Runs inside an async function, so top-level await is fine.
 //
 // Without a parameter the widget shows every theme as its own section: a label with the theme's deals,
-// then its products (deals first). Widget parameter (long-press > Edit widget > Parameter): a theme name such as "Pannen" or
+// then at most 3 of its products (deals always; when more, expensive ones go first, then normal ones). Widget parameter (long-press > Edit widget > Parameter): a theme name such as "Pannen" or
 // "Speakers" shows only that theme.
 // Tapping opens the detail screen in Scriptable (all products of the theme, tap a product for its shop).
 
@@ -100,7 +100,7 @@ function layout(family) {
   const small = Math.round(screenW * 0.395);
   const wide = Math.round(screenW * 0.847);
   const tall = Math.round(small * 2.24);
-  if (family === "large") return { w: wide, h: tall, cols: 3, pad: 12, gap: 6, headH: 22, labelH: 17, minTile: 46, maxTile: 60, big: true };
+  if (family === "large") return { w: wide, h: tall, cols: 3, pad: 12, gap: 6, headH: 22, labelH: 17, minTile: 46, maxTile: 76, big: true };
   if (family === "medium") return { w: wide, h: small, cols: 4, pad: 11, gap: 4, headH: 14, labelH: 13, minTile: 34, maxTile: 46, big: false };
   return { w: small, h: small, cols: 2, pad: 9, gap: 4, headH: 14, labelH: 13, minTile: 34, maxTile: 46, big: false };
 }
@@ -108,7 +108,7 @@ function layout(family) {
 // Each tile is drawn as a transparent image (border + text only). Home screens in tinted or
 // black-and-white mode turn widget shapes into solid white; a transparent image keeps only its
 // lines and letters, so the tiles stay readable in every home screen style.
-const CORE_VERSION = "v7";
+const CORE_VERSION = "v8";
 
 function canvas(w, h) {
   const ctx = new DrawContext();
@@ -162,6 +162,18 @@ function priceSize(L, value, tileW) {
 }
 
 const dealText = (n) => `${n} deal${n > 1 ? "s" : ""}`;
+
+// The overview shows at most PER_THEME products per theme. Deals always stay (even when there are
+// more), then the rest fills up by status: sharp first, then grey (normal, no price), red (expensive) last.
+// Within a status the data's own order is kept (lowest % first).
+const PER_THEME = 3;
+const KEEP_ORDER = { Deal: 0, Scherp: 1, Normaal: 2, "Geen prijs": 2, Duur: 3 };
+function pickForTheme(items, max) {
+  const rank = (i) => KEEP_ORDER[i.status] ?? 2;
+  const sorted = items.map((it, n) => ({ it, n })).sort((a, b) => rank(a.it) - rank(b.it) || a.n - b.n).map((x) => x.it);
+  const deals = sorted.filter((i) => i.status === "Deal").length;
+  return sorted.slice(0, Math.max(max, deals));
+}
 
 // Top row: "Prijswaker" (or the chosen theme) left; Black Friday countdown right. With one theme,
 // its deals go here too. A stale date shows in amber.
@@ -248,7 +260,9 @@ function buildWidget(data, family, param) {
   const sections = (chosen ? [chosen] : groupsOf(data))
     .map((g) => {
       const items = data.items.filter((i) => inGroup(i, g));
-      return { g, items, deals: items.filter((i) => i.status === "Deal").length };
+      // One theme (parameter): all its products. Overview: at most PER_THEME per theme.
+      const picked = chosen ? items : pickForTheme(items, PER_THEME);
+      return { g, items: picked, total: items.length, deals: items.filter((i) => i.status === "Deal").length };
     })
     .filter((s) => s.items.length);
   const withLabels = !chosen;
@@ -275,7 +289,7 @@ function buildWidget(data, family, param) {
   for (const s of sections) {
     const shown = s.items.slice(0, s.rows * L.cols);
     if (withLabels) {
-      addImageRow(labelImage(s.g, s.deals, s.items.length - shown.length, L, innerW, L.labelH), L.labelH,
+      addImageRow(labelImage(s.g, s.deals, s.total - shown.length, L, innerW, L.labelH), L.labelH,
         runUrl({ group: s.g.id }));
     }
     for (let r = 0; r < s.rows; r++) {

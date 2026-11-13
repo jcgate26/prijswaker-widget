@@ -20,8 +20,10 @@ Tik op de widget om het volledige dashboard te openen.
 ## Per thema en doorklikken
 
 - Zonder parameter is de widget per thema ingedeeld (nu **Speakers** en **Pannen**). Elk thema heeft
-  een kopregel met het aantal deals (groen), daaronder de producten van dat thema, deals eerst.
-  Past niet alles, dan staat er `+2 meer` in de kopregel.
+  een kopregel met het aantal deals (groen), daaronder maximaal 3 producten van dat thema. Deals
+  staan er altijd; zijn er meer dan 3 producten, dan vallen eerst de rode (duur) weg, daarna de
+  grijze (normaal). Op het kleine formaat passen er 2 per thema. Wat wegvalt, staat als `+2 meer`
+  in de kopregel. Met een thema als parameter zie je alle producten van dat thema.
 - Een widget voor één thema: houd de widget ingedrukt › **Wijzig widget** › bij **Parameter** typ je
   het thema, bijvoorbeeld `Pannen` of `Speakers` (`Soundbars` werkt ook nog). Zet meerdere widgets
   op elkaar voor een stapel waar je doorheen veegt.
