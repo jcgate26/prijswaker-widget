@@ -1,16 +1,43 @@
-// Prijswaker widget design (tiles, dark) and the detail screen. Loaded by Prijswaker.js; edit this file
-// to change the look. Runs inside an async function, so top-level await is fine.
+// BF Deals widget design (tiles, dark), the app screen and adding products. Loaded by the loader
+// script (Prijswaker.js); edit this file to change the look. Runs inside an async function, so
+// top-level await is fine.
 //
-// Without a parameter the widget shows every theme as its own section: a label with the theme's deals,
-// then at most 3 of its products (deals always; when more, expensive ones go first, then normal ones). Widget parameter (long-press > Edit widget > Parameter): a theme name such as "Pannen" or
-// "Speakers" shows only that theme.
-// Tapping opens the detail screen in Scriptable (all products of the theme, tap a product for its shop).
+// Two people use it. Each phone remembers who it belongs to (Jasper or Rebecca) and which themes to
+// show; every product has an owner ("gedeeld", "jasper" or "rebecca") and you see the shared ones
+// plus your own. Without a parameter the widget shows every chosen theme as its own section: a label
+// with the theme's deals, then at most 3 of its products (deals always; when more, expensive ones go
+// first, then normal ones). Widget parameter (long-press > Edit widget > Parameter): a theme name such
+// as "Pannen" or "Speakers" shows only that theme. Tapping opens the app screen: all products, add a
+// product, choose themes, switch person.
 
 const DATA_URL = "https://raw.githubusercontent.com/jcgate26/prijswaker-widget/main/widget.json";
 const BLACK_FRIDAY = new Date(2026, 10, 27);
 
 const fm = FileManager.local();
 const cachePath = fm.joinPath(fm.cacheDirectory(), "prijswaker-widget.json");
+
+// Per phone: who this is and which themes are hidden. Kept in Scriptable's documents (also read by
+// the widget); the key for adding products lives in the Keychain.
+const settingsPath = fm.joinPath(fm.documentsDirectory(), "bfdeals-instellingen.json");
+const KEY_NAME = "bfdeals-github-sleutel";
+const NAMES = { jasper: "Jasper", rebecca: "Rebecca" };
+const OTHER = { jasper: "Rebecca", rebecca: "Jasper" };
+
+function loadSettings() {
+  try {
+    if (fm.fileExists(settingsPath)) {
+      const s = JSON.parse(fm.readString(settingsPath));
+      return { who: NAMES[s.who] ? s.who : null, hidden: Array.isArray(s.hidden) ? s.hidden : [] };
+    }
+  } catch (e) { /* damaged file: start fresh */ }
+  return { who: null, hidden: [] };
+}
+function saveSettings(S) {
+  fm.writeString(settingsPath, JSON.stringify({ who: S.who, hidden: S.hidden }));
+}
+
+// Shared products for everyone; your own only for you. Before you say who you are: shared only.
+const canSee = (it, S) => { const o = it.owner || "gedeeld"; return o === "gedeeld" || (S.who && o === S.who); };
 
 async function loadData() {
   try {
@@ -108,7 +135,7 @@ function layout(family) {
 // Each tile is drawn as a transparent image (border + text only). Home screens in tinted or
 // black-and-white mode turn widget shapes into solid white; a transparent image keeps only its
 // lines and letters, so the tiles stay readable in every home screen style.
-const CORE_VERSION = "v8";
+const CORE_VERSION = "v9";
 
 function canvas(w, h) {
   const ctx = new DrawContext();
@@ -175,11 +202,12 @@ function pickForTheme(items, max) {
   return sorted.slice(0, Math.max(max, deals));
 }
 
-// Top row: "Prijswaker" (or the chosen theme) left; Black Friday countdown right. With one theme,
+// Top row: "BF Deals" (or the chosen theme) left; Black Friday countdown right. With one theme,
 // its deals go here too. A stale date shows in amber.
-function headerImage(data, L, w, h, title, deals) {
+function headerImage(data, L, w, h, title, deals, setUp) {
   const d = daysToBlackFriday();
   const parts = [];
+  if (!setUp) parts.push("tik om in te stellen");
   if (deals != null) parts.push(deals ? dealText(deals) : "geen deals");
   if (data.updated && data.updated < todayIso()) {
     const upd = new Date(data.updated + "T12:00:00");
@@ -190,7 +218,7 @@ function headerImage(data, L, w, h, title, deals) {
   const stale = data.updated && data.updated < todayIso();
   const right = parts.join(" · ");
   return drawTile(L, w, h, [{ left: title, right, size: L.big ? 15 : 12, rightSize: L.big ? 10.5 : 8,
-    bold: true, leftColor: C.text, rightColor: stale ? C.amber : deals ? C.green : C.muted }], null, 0, 3);
+    bold: true, leftColor: C.text, rightColor: stale || !setUp ? C.amber : deals ? C.green : C.muted }], null, 0, 3);
 }
 
 // Theme label row: "SPEAKERS" left, the theme's deals right (green), plus how many products did not fit.
@@ -239,12 +267,12 @@ function planRows(L, sections, withLabels) {
   return Math.min(L.maxTile, tileHeight(L, nLabels, used));
 }
 
-function buildWidget(data, family, param) {
+function buildWidget(data, family, param, S) {
   const w = new ListWidget();
   w.backgroundColor = C.bg;
   w.refreshAfterDate = new Date(Date.now() + 60 * 60 * 1000);
   if (!data) {
-    const t = w.addText("Prijswaker: nog geen gegevens");
+    const t = w.addText("BF Deals: nog geen gegevens");
     t.textColor = C.muted;
     t.font = Font.systemFont(12);
     return w;
@@ -257,9 +285,9 @@ function buildWidget(data, family, param) {
   // One theme (widget parameter) or all themes, each as its own section. Items arrive sorted:
   // deals first, then normal (lowest % first), then expensive, so deals are always on screen.
   const chosen = findGroup(data, param);
-  const sections = (chosen ? [chosen] : groupsOf(data))
+  const sections = (chosen ? [chosen] : groupsOf(data).filter((g) => !S.hidden.includes(g.id)))
     .map((g) => {
-      const items = data.items.filter((i) => inGroup(i, g));
+      const items = data.items.filter((i) => inGroup(i, g) && canSee(i, S));
       // One theme (parameter): all its products. Overview: at most PER_THEME per theme.
       const picked = chosen ? items : pickForTheme(items, PER_THEME);
       return { g, items: picked, total: items.length, deals: items.filter((i) => i.status === "Deal").length };
@@ -283,8 +311,8 @@ function buildWidget(data, family, param) {
   };
 
   const totalDeals = sections.reduce((a, s) => a + s.deals, 0);
-  addImageRow(headerImage(data, L, innerW, L.headH, chosen ? chosen.short || chosen.title : "Prijswaker",
-    chosen ? totalDeals : null), L.headH);
+  addImageRow(headerImage(data, L, innerW, L.headH, chosen ? chosen.short || chosen.title : data.name || "BF Deals",
+    chosen ? totalDeals : null, !!S.who), L.headH);
 
   for (const s of sections) {
     const shown = s.items.slice(0, s.rows * L.cols);
@@ -311,9 +339,101 @@ function buildWidget(data, family, param) {
   return w;
 }
 
-// ---------- detail screen (opens in Scriptable when you tap the widget) ----------
+// ---------- adding a product (from the app screen or the Safari share sheet) ----------
 
-function detailScreen(data, groupId, productId) {
+// The request becomes a GitHub issue in the private prijswaker repository. A GitHub Action turns it
+// into a line in nieuwe-producten.txt and the cloud round adds the product and tracks it everywhere.
+const REPO = "jcgate26/prijswaker";
+
+async function ask(title, message, actions, cancel = "Annuleer") {
+  const a = new Alert();
+  a.title = title;
+  a.message = message;
+  actions.forEach((x) => a.addAction(x));
+  if (cancel) a.addCancelAction(cancel);
+  return await a.present();
+}
+
+async function askKey(S) {
+  const a = new Alert();
+  a.title = "Sleutel voor toevoegen";
+  a.message = "Plak de sleutel die je van Jasper kreeg (begint met github_pat_). Je hoeft dit maar één keer te doen.";
+  a.addSecureTextField("github_pat_…", "");
+  a.addAction("Bewaar");
+  a.addCancelAction("Annuleer");
+  if ((await a.present()) === -1) return null;
+  const key = a.textFieldValue(0).trim();
+  if (!key) return null;
+  Keychain.set(KEY_NAME, key);
+  return key;
+}
+
+async function addProduct(S, presetUrl) {
+  if (!S.who) await askWho(S);
+  if (!S.who) return false;
+  let key = Keychain.contains(KEY_NAME) ? Keychain.get(KEY_NAME) : await askKey(S);
+  if (!key) return false;
+  let preset = presetUrl || "";
+  if (!preset) {
+    try {
+      const clip = (Pasteboard.pasteString() || "").trim();
+      if (/^https?:\/\/\S+$/.test(clip)) preset = clip;
+    } catch (e) { /* no clipboard access */ }
+  }
+  const a = new Alert();
+  a.title = "Product toevoegen";
+  a.message = "Een link uit een willekeurige winkel of de naam van het product. BF Deals zoekt het product daarna overal op, niet alleen in die winkel.";
+  a.addTextField("Link of productnaam", preset);
+  a.addTextField("Notitie, bijv. kleur (mag leeg)", "");
+  a.addAction("Alleen voor mij");
+  a.addAction(`Gedeeld met ${OTHER[S.who]}`);
+  a.addCancelAction("Annuleer");
+  const choice = await a.present();
+  if (choice === -1) return false;
+  const product = a.textFieldValue(0).replace(/\s+/g, " ").trim();
+  const note = a.textFieldValue(1).replace(/\s+/g, " ").trim();
+  if (product.length < 3) {
+    await ask("Niets toegevoegd", "Vul een link of productnaam in.", ["OK"], null);
+    return false;
+  }
+  const owner = choice === 0 ? S.who : "gedeeld";
+  const req = new Request(`https://api.github.com/repos/${REPO}/issues`);
+  req.method = "POST";
+  req.timeoutInterval = 20;
+  req.headers = { Authorization: "Bearer " + key, Accept: "application/vnd.github+json",
+    "Content-Type": "application/json", "X-GitHub-Api-Version": "2022-11-28" };
+  req.body = JSON.stringify({
+    title: `BF Deals: nieuw product (${NAMES[S.who]})`,
+    body: `wie: ${owner}\nproduct: ${product}\nnotitie: ${note}\n\nAangevraagd in de BF Deals-widget door ${NAMES[S.who]}.`,
+  });
+  let status = 0;
+  try {
+    await req.loadJSON();
+    status = req.response ? req.response.statusCode : 0;
+  } catch (e) { status = -1; }
+  if (status === 201) {
+    await ask("Toegevoegd", `${owner === "gedeeld" ? `Gedeeld met ${OTHER[S.who]}` : "Alleen voor jou"}. BF Deals zoekt het product nu op; over ongeveer 20 minuten staat het in je widget.`, ["OK"], null);
+    return true;
+  }
+  if (status === 401 || status === 403 || status === 404) {
+    Keychain.remove(KEY_NAME);
+    await ask("Sleutel werkt niet", "De sleutel is verlopen of klopt niet. Vraag Jasper om een nieuwe en probeer het opnieuw.", ["OK"], null);
+  } else {
+    await ask("Niet gelukt", "Geen verbinding met GitHub. Probeer het straks opnieuw.", ["OK"], null);
+  }
+  return false;
+}
+
+// ---------- app screen (opens in Scriptable when you tap the widget) ----------
+
+async function askWho(S) {
+  const i = await ask("Wie ben je?", "BF Deals laat je de gedeelde producten zien en die van jezelf.", ["Jasper", "Rebecca"], "Later");
+  if (i === -1) return;
+  S.who = i === 0 ? "jasper" : "rebecca";
+  saveSettings(S);
+}
+
+function detailScreen(data, S, groupId, productId) {
   const table = new UITable();
   table.showSeparators = true;
   const add = (height, fill, build, onSelect) => {
@@ -328,78 +448,134 @@ function detailScreen(data, groupId, productId) {
     table.addRow(row);
     return row;
   };
-
-  const d = daysToBlackFriday();
-  const upd = new Date(data.updated + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long" });
-  add(64, C.bg, (row) => {
-    const c = row.addText("Prijswaker", `Stand ${upd}${d > 0 ? ` · Black Friday over ${d} dagen` : ""}`);
-    c.titleFont = Font.boldSystemFont(24);
-    c.titleColor = C.text;
-    c.subtitleColor = data.updated < todayIso() ? C.amber : C.muted;
-    c.subtitleFont = Font.systemFont(13);
-  });
-
-  const all = groupsOf(data);
-  const first = all.find((g) => g.id === groupId);
-  const ordered = first ? [first, ...all.filter((g) => g !== first)] : all;
-  for (const g of ordered) {
-    const items = data.items.filter((i) => inGroup(i, g));
-    if (!items.length) continue;
-    const deals = items.filter((i) => i.status === "Deal").length;
-    add(44, C.bg, (row) => {
-      const name = g.short && g.short !== g.title ? `${g.short} · ${g.title}` : g.title;
-      const c = row.addText(name.toUpperCase(), null);
-      c.titleFont = Font.semiboldSystemFont(13);
-      c.titleColor = C.muted;
-      const r = row.addText(deals ? `${dealText(deals)} · ${items.length} producten` : `geen deals · ${items.length} producten`);
-      r.rightAligned();
-      r.titleFont = Font.semiboldSystemFont(13);
-      r.titleColor = deals ? C.green : C.muted;
-    });
-    for (const it of items) {
-      const fill = it.product === productId ? new Color("#2c2c30") : new Color("#1f1f21");
-      const parts = [shopName(it.shop) || "geen prijs die meetelt"];
-      if (it.avg2026) parts.push(`gem. ${eur(it.avg2026)}`);
-      if (it.threshold) parts.push(`deal ≤ ${eur(it.threshold)}`);
-      add(66, fill, (row) => {
-        const left = row.addText(it.full_name || it.name, parts.join(" · "));
-        left.widthWeight = 70;
-        left.titleFont = Font.semiboldSystemFont(15);
-        left.titleColor = C.text;
-        left.subtitleFont = Font.systemFont(12);
-        left.subtitleColor = C.muted;
-        const right = row.addText(eur(it.best), it.best == null ? "" : `${pct(it.diff_pct)} · ${it.status.toLowerCase()}`);
-        right.widthWeight = 30;
-        right.rightAligned();
-        right.titleFont = Font.semiboldSystemFont(17);
-        right.titleColor = TEXT_COLOR[it.status] || C.text;
-        right.subtitleFont = Font.semiboldSystemFont(12);
-        right.subtitleColor = TEXT_COLOR[it.status] === C.text ? C.muted : TEXT_COLOR[it.status];
-      }, it.url ? () => Safari.open(it.url) : null);
-    }
-  }
-
-  add(56, C.bg, (row) => {
-    const c = row.addText("Volledig dashboard openen ↗", "Grafieken, alle winkels en het advies per product");
+  const action = (title, sub, color, fn) => add(56, C.bg, (row) => {
+    const c = row.addText(title, sub);
     c.titleFont = Font.semiboldSystemFont(15);
-    c.titleColor = C.green;
+    c.titleColor = color;
     c.subtitleFont = Font.systemFont(12);
     c.subtitleColor = C.muted;
-  }, () => Safari.open(data.dashboard));
+  }, async () => { await fn(); fill(); });
+
+  // mode: "list" (products) or "themes" (pick which themes to show)
+  let mode = "list";
+  const fill = () => {
+    table.removeAllRows();
+    const d = daysToBlackFriday();
+    const upd = new Date(data.updated + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long" });
+    add(64, C.bg, (row) => {
+      const c = row.addText(data.name || "BF Deals", `${S.who ? NAMES[S.who] + " · " : ""}stand ${upd}${d > 0 ? ` · Black Friday over ${d} dagen` : ""}`);
+      c.titleFont = Font.boldSystemFont(24);
+      c.titleColor = C.text;
+      c.subtitleColor = data.updated < todayIso() ? C.amber : C.muted;
+      c.subtitleFont = Font.systemFont(13);
+    });
+
+    if (!S.who) {
+      action("Wie ben je? Tik om in te stellen", "Tot die tijd zie je alleen de gedeelde producten", C.amber, () => askWho(S));
+    }
+
+    if (mode === "themes") {
+      add(44, C.bg, (row) => {
+        const c = row.addText("THEMA'S IN JE WIDGET", "Tik om aan of uit te zetten");
+        c.titleFont = Font.semiboldSystemFont(13);
+        c.titleColor = C.muted;
+        c.subtitleFont = Font.systemFont(12);
+        c.subtitleColor = C.muted;
+      });
+      for (const g of groupsOf(data)) {
+        const items = data.items.filter((i) => inGroup(i, g) && canSee(i, S));
+        if (!items.length) continue;
+        const on = !S.hidden.includes(g.id);
+        add(52, new Color("#1f1f21"), (row) => {
+          const c = row.addText(`${on ? "✓" : "○"}  ${g.short || g.title}`, `${items.length} producten${g.short && g.short !== g.title ? " · " + g.title : ""}`);
+          c.titleFont = Font.semiboldSystemFont(16);
+          c.titleColor = on ? C.green : C.muted;
+          c.subtitleFont = Font.systemFont(12);
+          c.subtitleColor = C.muted;
+        }, () => {
+          S.hidden = on ? [...S.hidden, g.id] : S.hidden.filter((x) => x !== g.id);
+          saveSettings(S);
+          fill();
+        });
+      }
+      action("Klaar", null, C.green, () => { mode = "list"; });
+      table.reload();
+      return;
+    }
+
+    const all = groupsOf(data).filter((g) => !S.hidden.includes(g.id) || g.id === groupId);
+    const first = all.find((g) => g.id === groupId);
+    const ordered = first ? [first, ...all.filter((g) => g !== first)] : all;
+    for (const g of ordered) {
+      const items = data.items.filter((i) => inGroup(i, g) && canSee(i, S));
+      if (!items.length) continue;
+      const deals = items.filter((i) => i.status === "Deal").length;
+      add(44, C.bg, (row) => {
+        const name = g.short && g.short !== g.title ? `${g.short} · ${g.title}` : g.title;
+        const c = row.addText(name.toUpperCase(), null);
+        c.titleFont = Font.semiboldSystemFont(13);
+        c.titleColor = C.muted;
+        const r = row.addText(deals ? `${dealText(deals)} · ${items.length} producten` : `geen deals · ${items.length} producten`);
+        r.rightAligned();
+        r.titleFont = Font.semiboldSystemFont(13);
+        r.titleColor = deals ? C.green : C.muted;
+      });
+      for (const it of items) {
+        const fillColor = it.product === productId ? new Color("#2c2c30") : new Color("#1f1f21");
+        const parts = [shopName(it.shop) || "geen prijs die meetelt"];
+        if (it.avg2026) parts.push(`gem. ${eur(it.avg2026)}`);
+        if (it.threshold) parts.push(`deal ≤ ${eur(it.threshold)}`);
+        if ((it.owner || "gedeeld") !== "gedeeld") parts.push("alleen jij");
+        add(66, fillColor, (row) => {
+          const left = row.addText(it.full_name || it.name, parts.join(" · "));
+          left.widthWeight = 70;
+          left.titleFont = Font.semiboldSystemFont(15);
+          left.titleColor = C.text;
+          left.subtitleFont = Font.systemFont(12);
+          left.subtitleColor = C.muted;
+          const right = row.addText(eur(it.best), it.best == null ? "" : `${pct(it.diff_pct)} · ${it.status.toLowerCase()}`);
+          right.widthWeight = 30;
+          right.rightAligned();
+          right.titleFont = Font.semiboldSystemFont(17);
+          right.titleColor = TEXT_COLOR[it.status] || C.text;
+          right.subtitleFont = Font.semiboldSystemFont(12);
+          right.subtitleColor = TEXT_COLOR[it.status] === C.text ? C.muted : TEXT_COLOR[it.status];
+        }, it.url ? () => Safari.open(it.url) : null);
+      }
+    }
+
+    action("＋  Product toevoegen", "Plak een link uit een winkel; ook via Deel › Scriptable in Safari", C.green, () => addProduct(S));
+    action("Thema's kiezen", "Welke thema's je widget laat zien", C.text, () => { mode = "themes"; });
+    action(S.who ? `Ik ben ${NAMES[S.who]} · wisselen` : "Wie ben je?", Keychain.contains(KEY_NAME) ? "Sleutel voor toevoegen is ingesteld" : "Nog geen sleutel voor toevoegen", C.muted, async () => {
+      const i = await ask("Instellingen", null, ["Jasper", "Rebecca", "Sleutel vervangen"], "Annuleer");
+      if (i === 0 || i === 1) { S.who = i === 0 ? "jasper" : "rebecca"; saveSettings(S); }
+      if (i === 2) await askKey(S);
+    });
+    action("Volledig dashboard openen ↗", "Grafieken, alle winkels en het advies per product", C.green, () => Safari.open(data.dashboard));
+    table.reload();
+  };
+  fill();
   return table;
 }
 
 // ---------- run ----------
 
+const S = loadSettings();
 const data = await loadData();
+const shared = (args.urls && args.urls.length ? args.urls : (args.plainTexts || []).filter((t) => /^https?:\/\//.test(t)));
 if (config.runsInWidget) {
-  Script.setWidget(buildWidget(data, config.widgetFamily || "small", args.widgetParameter));
+  Script.setWidget(buildWidget(data, config.widgetFamily || "small", args.widgetParameter, S));
+} else if (config.runsInActionExtension || (shared && shared.length)) {
+  // Safari: Deel › Scriptable › BF Deals (needs "Share Sheet Inputs: URLs" in the script settings).
+  await addProduct(S, shared && shared[0]);
 } else if (data) {
   const q = args.queryParameters || {};
-  await detailScreen(data, q.group, q.product).present(false);
+  if (!S.who) await askWho(S);
+  if (q.action === "add") await addProduct(S);
+  await detailScreen(data, S, q.group, q.product).present(false);
 } else {
   const a = new Alert();
-  a.title = "Prijswaker";
+  a.title = "BF Deals";
   a.message = "Geen gegevens: controleer je internetverbinding.";
   a.addAction("OK");
   await a.present();
