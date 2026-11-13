@@ -58,6 +58,20 @@
    "threshold": 165
   },
   {
+   "product": "lifestyle_ultra",
+   "name": "Lifestyle Ultra",
+   "full_name": "Bose Lifestyle Ultra Soundbar",
+   "group": "Speakers",
+   "group_id": "soundbar",
+   "status": "Normaal",
+   "best": 999.0,
+   "shop": "Coolblue.nl",
+   "url": "https://www.kieskeurig.nl/soundbar/product/52197797-bose-lifestyle-ultra-soundbar-zwart",
+   "diff_pct": 0.1,
+   "avg2026": 998,
+   "threshold": 899
+  },
+  {
    "product": "beam_ultra",
    "name": "Beam Ultra",
    "full_name": "Sonos Beam Ultra",
@@ -92,10 +106,10 @@
    "group": "Speakers",
    "group_id": "soundbar",
    "status": "Duur",
-   "best": 999.0,
-   "shop": "HelloTV",
-   "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
-   "diff_pct": 16.6,
+   "best": 946.0,
+   "shop": "art & craft",
+   "url": "https://www.kieskeurig.be/soundbar/product/51533037-sonos-arc-ultra-wit",
+   "diff_pct": 10.4,
    "avg2026": 857,
    "threshold": 771
   },
@@ -112,20 +126,6 @@
    "diff_pct": 31.4,
    "avg2026": 722,
    "threshold": 650
-  },
-  {
-   "product": "lifestyle_ultra",
-   "name": "Lifestyle Ultra",
-   "full_name": "Bose Lifestyle Ultra Soundbar",
-   "group": "Speakers",
-   "group_id": "soundbar",
-   "status": "Geen prijs",
-   "best": 999.0,
-   "shop": "Coolblue",
-   "url": "https://www.coolblue.nl/product/978495/bose-lifestyle-ultra-soundbar-zwart.html",
-   "diff_pct": null,
-   "avg2026": null,
-   "threshold": null
   }
  ]
 }
