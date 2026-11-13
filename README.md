@@ -12,17 +12,21 @@ Gegevens voor de iPhone-widget van de Prijswaker: per product de status en de be
 3. Open Scriptable, tik op **+**, plak de tekst en tik linksboven op de naam om het script
    **Prijswaker** te noemen. Tik op **Gereed**.
 4. Houd je vinger op een lege plek van je beginscherm, tik op **Wijzig** › **Voeg widget toe**,
-   kies **Scriptable** en een maat (klein: 7 producten, middel: 7, groot: tot 17). Zet hem neer.
+   kies **Scriptable** en een maat (klein, middel of groot). Zet hem neer.
 5. Houd de widget ingedrukt › **Wijzig widget** › bij **Script** kies **Prijswaker**.
 
 Tik op de widget om het volledige dashboard te openen.
 
 ## Per thema en doorklikken
 
+- Zonder parameter is de widget per thema ingedeeld (nu **Speakers** en **Pannen**). Elk thema heeft
+  een kopregel met het aantal deals (groen), daaronder maximaal 3 producten van dat thema. Deals
+  staan er altijd; zijn er meer dan 3 producten, dan vallen eerst de rode (duur) weg, daarna de
+  grijze (normaal). Op het kleine formaat passen er 2 per thema. Wat wegvalt, staat als `+2 meer`
+  in de kopregel. Met een thema als parameter zie je alle producten van dat thema.
 - Een widget voor één thema: houd de widget ingedrukt › **Wijzig widget** › bij **Parameter** typ je
-  het thema, bijvoorbeeld `Pannen` of `Soundbars`. Zet meerdere widgets op elkaar voor een stapel
-  waar je doorheen veegt.
-- Zonder parameter toont de widget alles; passen de producten niet meer, dan eerst één tegel per thema.
+  het thema, bijvoorbeeld `Pannen` of `Speakers` (`Soundbars` werkt ook nog). Zet meerdere widgets
+  op elkaar voor een stapel waar je doorheen veegt.
 - Tik op de widget voor het detailscherm in Scriptable: alle producten van het thema met winkel,
   gemiddelde en dealgrens. Tik op een product om de winkel te openen. Bij middel en groot formaat
   opent elke tegel zijn eigen thema.

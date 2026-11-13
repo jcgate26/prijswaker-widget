@@ -1,8 +1,9 @@
 // Prijswaker widget design (tiles, dark) and the detail screen. Loaded by Prijswaker.js; edit this file
 // to change the look. Runs inside an async function, so top-level await is fine.
 //
-// Widget parameter (long-press the widget > Edit widget > Parameter): a theme name such as "Pannen" or
-// "Soundbars" shows only that theme. Empty shows everything; when that no longer fits, one tile per theme.
+// Without a parameter the widget shows every theme as its own section: a label with the theme's deals,
+// then at most 3 of its products (deals always; when more, expensive ones go first, then normal ones). Widget parameter (long-press > Edit widget > Parameter): a theme name such as "Pannen" or
+// "Speakers" shows only that theme.
 // Tapping opens the detail screen in Scriptable (all products of the theme, tap a product for its shop).
 
 const DATA_URL = "https://raw.githubusercontent.com/jcgate26/prijswaker-widget/main/widget.json";
@@ -75,7 +76,11 @@ const inGroup = (it, g) => it.group_id === g.id || it.group === g.title;
 function findGroup(data, text) {
   const q = (text || "").trim().toLowerCase();
   if (!q) return null;
-  return groupsOf(data).find((g) => [g.id, g.short, g.title].some((x) => (x || "").toLowerCase().startsWith(q))) || null;
+  // Prefix match either way, so an old parameter like "Soundbars" still finds the theme with id "soundbar".
+  return groupsOf(data).find((g) => [g.id, g.short, g.title].some((x) => {
+    const v = (x || "").toLowerCase();
+    return v && (v.startsWith(q) || q.startsWith(v));
+  })) || null;
 }
 
 function runUrl(params) {
@@ -87,21 +92,23 @@ function runUrl(params) {
 // ---------- widget ----------
 
 // Widget size in points, derived from the screen width (iOS widget sizes scale with the phone).
+// The widget is built from rows: one header row, then per theme a label row (theme name and its
+// deals) followed by tile rows with that theme's products. minTile/maxTile bound the tile height.
 function layout(family) {
   const s = Device.screenSize();
   const screenW = Math.min(s.width, s.height);
   const small = Math.round(screenW * 0.395);
   const wide = Math.round(screenW * 0.847);
   const tall = Math.round(small * 2.24);
-  if (family === "large") return { w: wide, h: tall, cols: 3, rows: 6, pad: 12, gap: 6, big: true };
-  if (family === "medium") return { w: wide, h: small, cols: 4, rows: 2, pad: 11, gap: 5, big: false };
-  return { w: small, h: small, cols: 2, rows: 4, pad: 9, gap: 4, big: false };
+  if (family === "large") return { w: wide, h: tall, cols: 3, pad: 12, gap: 6, headH: 22, labelH: 17, minTile: 46, maxTile: 76, big: true };
+  if (family === "medium") return { w: wide, h: small, cols: 4, pad: 11, gap: 4, headH: 14, labelH: 13, minTile: 34, maxTile: 46, big: false };
+  return { w: small, h: small, cols: 2, pad: 9, gap: 4, headH: 14, labelH: 13, minTile: 34, maxTile: 46, big: false };
 }
 
 // Each tile is drawn as a transparent image (border + text only). Home screens in tinted or
 // black-and-white mode turn widget shapes into solid white; a transparent image keeps only its
 // lines and letters, so the tiles stay readable in every home screen style.
-const CORE_VERSION = "v6";
+const CORE_VERSION = "v8";
 
 function canvas(w, h) {
   const ctx = new DrawContext();
@@ -154,23 +161,44 @@ function priceSize(L, value, tileW) {
   return value != null && value >= 1000 && tileW < 80 ? base - 2 : base;
 }
 
+const dealText = (n) => `${n} deal${n > 1 ? "s" : ""}`;
+
+// The overview shows at most PER_THEME products per theme. Deals always stay (even when there are
+// more), then the rest fills up by status: sharp first, then grey (normal, no price), red (expensive) last.
+// Within a status the data's own order is kept (lowest % first).
+const PER_THEME = 3;
+const KEEP_ORDER = { Deal: 0, Scherp: 1, Normaal: 2, "Geen prijs": 2, Duur: 3 };
+function pickForTheme(items, max) {
+  const rank = (i) => KEEP_ORDER[i.status] ?? 2;
+  const sorted = items.map((it, n) => ({ it, n })).sort((a, b) => rank(a.it) - rank(b.it) || a.n - b.n).map((x) => x.it);
+  const deals = sorted.filter((i) => i.status === "Deal").length;
+  return sorted.slice(0, Math.max(max, deals));
+}
+
+// Top row: "Prijswaker" (or the chosen theme) left; Black Friday countdown right. With one theme,
+// its deals go here too. A stale date shows in amber.
 function headerImage(data, L, w, h, title, deals) {
   const d = daysToBlackFriday();
   const parts = [];
-  if (deals) parts.push(`${deals} deal${deals > 1 ? "s" : ""}`);
+  if (deals != null) parts.push(deals ? dealText(deals) : "geen deals");
+  if (data.updated && data.updated < todayIso()) {
+    const upd = new Date(data.updated + "T12:00:00");
+    parts.push("stand " + upd.toLocaleDateString("nl-NL", { day: "numeric", month: "short" }));
+  }
   if (d > 0) parts.push(`BF ${d} d`);
   else if (d === 0) parts.push("Black Friday!");
-  const lines = [
-    { left: title, right: CORE_VERSION, size: L.big ? 15 : 12, rightSize: 6.5, bold: true, leftColor: C.text, rightColor: C.muted },
-    { left: parts.join(" · ") || " ", size: L.big ? 11 : 8.5, bold: true, leftColor: deals ? C.green : C.muted },
-  ];
-  if (data.updated && data.updated < todayIso()) {
-    // Only show the date when the data is not from today.
-    const upd = new Date(data.updated + "T12:00:00");
-    lines.push({ left: "stand " + upd.toLocaleDateString("nl-NL", { day: "numeric", month: "short" }),
-      size: L.big ? 10 : 8, leftColor: C.amber });
-  }
-  return drawTile(L, w, h, lines, null, 0, 3);
+  const stale = data.updated && data.updated < todayIso();
+  const right = parts.join(" · ");
+  return drawTile(L, w, h, [{ left: title, right, size: L.big ? 15 : 12, rightSize: L.big ? 10.5 : 8,
+    bold: true, leftColor: C.text, rightColor: stale ? C.amber : deals ? C.green : C.muted }], null, 0, 3);
+}
+
+// Theme label row: "SPEAKERS" left, the theme's deals right (green), plus how many products did not fit.
+function labelImage(g, deals, hidden, L, w, h) {
+  const parts = [deals ? dealText(deals) : "geen deals"];
+  if (hidden > 0) parts.push(`+${hidden} meer`);
+  return drawTile(L, w, h, [{ left: (g.short || g.title).toUpperCase(), right: parts.join(" · "),
+    size: L.big ? 11.5 : 8.5, bold: true, leftColor: C.muted, rightColor: deals ? C.green : C.muted }], null, 0, 3);
 }
 
 function productImage(it, L, w, h) {
@@ -181,23 +209,34 @@ function productImage(it, L, w, h) {
     { left: eur0(it.best), right: it.best == null ? "geen prijs" : pct(it.diff_pct), size: priceSize(L, it.best, w),
       rightSize: small, bold: true, leftColor: priceColor, rightColor: smallColor },
   ];
-  if (L.big && it.shop) lines.push({ left: shopName(it.shop), size: 9.5, leftColor: nameColor });
+  if (L.big && it.shop && h >= 52) lines.push({ left: shopName(it.shop), size: 9.5, leftColor: nameColor });
   return drawTile(L, w, h, lines, bColor, bWidth, L.big ? 9 : 7);
 }
 
-function themeImage(g, items, L, w, h) {
-  const deals = items.filter((i) => i.status === "Deal").length;
-  const top = items[0];
-  const status = deals ? "Deal" : top && top.status === "Scherp" ? "Scherp" : "Normaal";
-  const [bColor, bWidth, priceColor, smallColor, nameColor] = STYLE[status];
-  const small = L.big ? 11 : 8.5;
-  const lines = [
-    { left: `${g.short} · ${items.length}`, size: small, leftColor: nameColor },
-    { left: deals ? `${deals} deal${deals > 1 ? "s" : ""}` : top ? eur0(top.best) : "—", right: top ? pct(top.diff_pct) : "",
-      size: L.big ? 15 : 11.5, rightSize: small, bold: true, leftColor: priceColor, rightColor: smallColor },
-  ];
-  if (L.big && top) lines.push({ left: "beste: " + top.name, size: 9.5, leftColor: nameColor });
-  return drawTile(L, w, h, lines, bColor, bWidth, L.big ? 9 : 7);
+// Tile height when the widget has nLabels label rows and nTiles tile rows.
+function tileHeight(L, nLabels, nTiles) {
+  if (!nTiles) return 0;
+  const avail = L.h - 2 * L.pad - L.headH - nLabels * L.labelH - (nLabels + nTiles) * L.gap;
+  return Math.floor(avail / nTiles);
+}
+
+// Hands out tile rows: first one per theme (in order), then extra rows to themes that still have
+// products left, as long as the tiles stay at least minTile high.
+function planRows(L, sections, withLabels) {
+  const nLabels = withLabels ? sections.length : 0;
+  let budget = 0;
+  while (tileHeight(L, nLabels, budget + 1) >= L.minTile) budget++;
+  sections.forEach((s) => { s.rows = 0; });
+  let used = 0;
+  for (const s of sections) if (used < budget && s.items.length) { s.rows = 1; used++; }
+  let grew = true;
+  while (used < budget && grew) {
+    grew = false;
+    for (const s of sections) {
+      if (used < budget && s.items.length > s.rows * L.cols) { s.rows++; used++; grew = true; }
+    }
+  }
+  return Math.min(L.maxTile, tileHeight(L, nLabels, used));
 }
 
 function buildWidget(data, family, param) {
@@ -212,49 +251,59 @@ function buildWidget(data, family, param) {
   }
   const L = layout(family);
   w.setPadding(L.pad, L.pad, L.pad, L.pad);
-  const tileW = Math.floor((L.w - 2 * L.pad - (L.cols - 1) * L.gap) / L.cols);
-  const tileH = Math.floor((L.h - 2 * L.pad - (L.rows - 1) * L.gap) / L.rows);
-  const capacity = L.cols * L.rows - 1;
+  const innerW = L.w - 2 * L.pad;
+  const tileW = Math.floor((innerW - (L.cols - 1) * L.gap) / L.cols);
 
-  const group = findGroup(data, param);
-  // Items arrive sorted: deals first, then normal (lowest % first), then expensive, then no price.
-  const items = group ? data.items.filter((i) => inGroup(i, group)) : data.items;
-  const deals = items.filter((i) => i.status === "Deal").length;
-  w.url = runUrl({ group: group && group.id });
+  // One theme (widget parameter) or all themes, each as its own section. Items arrive sorted:
+  // deals first, then normal (lowest % first), then expensive, so deals are always on screen.
+  const chosen = findGroup(data, param);
+  const sections = (chosen ? [chosen] : groupsOf(data))
+    .map((g) => {
+      const items = data.items.filter((i) => inGroup(i, g));
+      // One theme (parameter): all its products. Overview: at most PER_THEME per theme.
+      const picked = chosen ? items : pickForTheme(items, PER_THEME);
+      return { g, items: picked, total: items.length, deals: items.filter((i) => i.status === "Deal").length };
+    })
+    .filter((s) => s.items.length);
+  const withLabels = !chosen;
+  const tileH = planRows(L, sections, withLabels);
+  w.url = runUrl({ group: chosen && chosen.id });
 
-  // Slots: header first, then products; when everything does not fit (and no theme was chosen),
-  // one tile per theme first, then the best products in the remaining slots.
-  const slots = [{ kind: "header" }];
-  const groups = groupsOf(data);
-  if (!group && items.length > capacity && groups.length > 1) {
-    for (const g of groups) slots.push({ kind: "theme", g, items: items.filter((i) => inGroup(i, g)) });
-  }
-  for (const it of items) if (slots.length <= capacity) slots.push({ kind: "item", it });
+  const linkTiles = family !== "small";
+  const col = w.addStack();
+  col.layoutVertically();
+  col.spacing = L.gap;
 
-  const grid = w.addStack();
-  grid.layoutVertically();
-  grid.spacing = L.gap;
-  for (let r = 0; r * L.cols < slots.length && r < L.rows; r++) {
-    const row = grid.addStack();
-    row.spacing = L.gap;
-    for (let c = 0; c < L.cols; c++) {
-      const s = slots[r * L.cols + c];
-      if (!s) {
-        const empty = row.addStack();
-        empty.size = new Size(tileW, tileH);
-        continue;
-      }
-      const t = row.addStack();
-      t.size = new Size(tileW, tileH);
-      const img = s.kind === "header" ? headerImage(data, L, tileW, tileH, group ? group.short : "Prijswaker", deals)
-        : s.kind === "theme" ? themeImage(s.g, s.items, L, tileW, tileH)
-        : productImage(s.it, L, tileW, tileH);
-      const wi = t.addImage(img);
-      wi.imageSize = new Size(tileW, tileH);
-      // Medium and large widgets can link each tile; the small one opens the screen of the whole widget.
-      if (family !== "small" && s.kind !== "header") {
-        const gid = s.kind === "theme" ? s.g.id : s.it.group_id;
-        t.url = runUrl({ group: gid, product: s.kind === "item" ? s.it.product : null });
+  const addImageRow = (img, h, url) => {
+    const row = col.addStack();
+    row.size = new Size(innerW, h);
+    const wi = row.addImage(img);
+    wi.imageSize = new Size(innerW, h);
+    if (url && linkTiles) row.url = url;
+  };
+
+  const totalDeals = sections.reduce((a, s) => a + s.deals, 0);
+  addImageRow(headerImage(data, L, innerW, L.headH, chosen ? chosen.short || chosen.title : "Prijswaker",
+    chosen ? totalDeals : null), L.headH);
+
+  for (const s of sections) {
+    const shown = s.items.slice(0, s.rows * L.cols);
+    if (withLabels) {
+      addImageRow(labelImage(s.g, s.deals, s.total - shown.length, L, innerW, L.labelH), L.labelH,
+        runUrl({ group: s.g.id }));
+    }
+    for (let r = 0; r < s.rows; r++) {
+      const row = col.addStack();
+      row.spacing = L.gap;
+      for (let c = 0; c < L.cols; c++) {
+        const it = shown[r * L.cols + c];
+        const t = row.addStack();
+        t.size = new Size(tileW, tileH);
+        if (!it) continue;
+        const wi = t.addImage(productImage(it, L, tileW, tileH));
+        wi.imageSize = new Size(tileW, tileH);
+        // Medium and large widgets link each tile; the small one opens the screen of the whole widget.
+        if (linkTiles) t.url = runUrl({ group: it.group_id, product: it.product });
       }
     }
   }
@@ -298,10 +347,11 @@ function detailScreen(data, groupId, productId) {
     if (!items.length) continue;
     const deals = items.filter((i) => i.status === "Deal").length;
     add(44, C.bg, (row) => {
-      const c = row.addText(g.title.toUpperCase(), null);
+      const name = g.short && g.short !== g.title ? `${g.short} · ${g.title}` : g.title;
+      const c = row.addText(name.toUpperCase(), null);
       c.titleFont = Font.semiboldSystemFont(13);
       c.titleColor = C.muted;
-      const r = row.addText(deals ? `${deals} deal${deals > 1 ? "s" : ""}` : `${items.length} producten`);
+      const r = row.addText(deals ? `${dealText(deals)} · ${items.length} producten` : `geen deals · ${items.length} producten`);
       r.rightAligned();
       r.titleFont = Font.semiboldSystemFont(13);
       r.titleColor = deals ? C.green : C.muted;
