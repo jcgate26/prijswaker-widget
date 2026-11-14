@@ -1,6 +1,6 @@
 {
  "name": "BF Deals",
- "updated": "2026-11-13",
+ "updated": "2026-11-14",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 3,
  "groups": [
@@ -36,7 +36,7 @@
    "best": 199.0,
    "shop": "SharkNinja.nl",
    "url": "https://www.kieskeurig.nl/gezichtsverzorgingstool/product/52125933-shark-cryoglow-huidverzorgingapparatuur-lichttherapie-voor-de-huid-lila",
-   "diff_pct": -31.5,
+   "diff_pct": -31.4,
    "avg2026": 290,
    "threshold": 261,
    "owner": "gedeeld"
@@ -67,7 +67,7 @@
    "shop": "Art & Craft",
    "url": "https://www.kieskeurig.nl/soundbar/product/52151405-klipsch-flexus-core-300-zwart-5-1-2-kanalen",
    "diff_pct": -11.2,
-   "avg2026": 1013,
+   "avg2026": 1012,
    "threshold": 911,
    "owner": "gedeeld"
   },
@@ -81,7 +81,7 @@
    "best": 181.0,
    "shop": "bol.com (verkoper Storena)",
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
-   "diff_pct": -1.0,
+   "diff_pct": -1.1,
    "avg2026": 183,
    "threshold": 165,
    "owner": "jasper"
