@@ -1,6 +1,6 @@
 {
  "name": "BF Deals",
- "updated": "2026-11-15",
+ "updated": "2026-11-16",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 1,
  "groups": [
@@ -36,9 +36,9 @@
    "best": 199.0,
    "shop": "SharkNinja.nl",
    "url": "https://www.kieskeurig.nl/gezichtsverzorgingstool/product/52125933-shark-cryoglow-huidverzorgingapparatuur-lichttherapie-voor-de-huid-lila",
-   "diff_pct": -31.3,
-   "avg2026": 290,
-   "threshold": 261,
+   "diff_pct": -31.2,
+   "avg2026": 289,
+   "threshold": 260,
    "owner": "gedeeld"
   },
   {
@@ -87,6 +87,21 @@
    "owner": "gedeeld"
   },
   {
+   "product": "arc_ultra",
+   "name": "Arc Ultra",
+   "full_name": "Sonos Arc Ultra",
+   "group": "Speakers",
+   "group_id": "soundbar",
+   "status": "Normaal",
+   "best": 849.0,
+   "shop": "Coolblue.nl",
+   "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
+   "diff_pct": -0.9,
+   "avg2026": 857,
+   "threshold": 771,
+   "owner": "gedeeld"
+  },
+  {
    "product": "lifestyle_ultra",
    "name": "Lifestyle Ultra",
    "full_name": "Bose Lifestyle Ultra Soundbar",
@@ -96,8 +111,8 @@
    "best": 999.0,
    "shop": "Coolblue.nl",
    "url": "https://www.kieskeurig.nl/soundbar/product/52197797-bose-lifestyle-ultra-soundbar-zwart",
-   "diff_pct": 0.1,
-   "avg2026": 998,
+   "diff_pct": 0.0,
+   "avg2026": 999,
    "threshold": 899,
    "owner": "gedeeld"
   },
@@ -130,21 +145,6 @@
    "avg2026": 174,
    "threshold": 157,
    "owner": "jasper"
-  },
-  {
-   "product": "arc_ultra",
-   "name": "Arc Ultra",
-   "full_name": "Sonos Arc Ultra",
-   "group": "Speakers",
-   "group_id": "soundbar",
-   "status": "Duur",
-   "best": 946.0,
-   "shop": "art & craft",
-   "url": "https://www.kieskeurig.be/soundbar/product/51533037-sonos-arc-ultra-wit",
-   "diff_pct": 10.4,
-   "avg2026": 857,
-   "threshold": 771,
-   "owner": "gedeeld"
   },
   {
    "product": "enchant_1100",
