@@ -72,6 +72,21 @@
    "owner": "gedeeld"
   },
   {
+   "product": "apollo_28",
+   "name": "Apollo 28 cm",
+   "full_name": "Demeyere Apollo 7 conische sauteuse 28 cm",
+   "group": "Demeyere Apollo 7",
+   "group_id": "pan",
+   "status": "Scherp",
+   "best": 171.0,
+   "shop": "cookandsizzle.com",
+   "url": "https://www.cookandsizzle.com/nl-nl/products/demeyere-apollo-7-conische-sauteuse-28-cm",
+   "diff_pct": -6.7,
+   "avg2026": 183,
+   "threshold": 165,
+   "owner": "jasper"
+  },
+  {
    "product": "theraface_glo",
    "name": "TheraFace Glo",
    "full_name": "Therabody TheraFace Mask Glo",
@@ -115,21 +130,6 @@
    "avg2026": 691,
    "threshold": 622,
    "owner": "gedeeld"
-  },
-  {
-   "product": "apollo_28",
-   "name": "Apollo 28 cm",
-   "full_name": "Demeyere Apollo 7 conische sauteuse 28 cm",
-   "group": "Demeyere Apollo 7",
-   "group_id": "pan",
-   "status": "Normaal",
-   "best": 180.0,
-   "shop": "bol.com (verkoper Storena)",
-   "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
-   "diff_pct": -1.8,
-   "avg2026": 183,
-   "threshold": 165,
-   "owner": "jasper"
   },
   {
    "product": "innolux_mesa_mega",
