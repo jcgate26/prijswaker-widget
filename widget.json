@@ -2,7 +2,7 @@
  "name": "BF Deals",
  "updated": "2026-11-17",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
- "deals": 2,
+ "deals": 3,
  "groups": [
   {
    "id": "soundbar",
@@ -54,6 +54,21 @@
    "diff_pct": -27.3,
    "avg2026": 282,
    "threshold": 254,
+   "owner": "gedeeld"
+  },
+  {
+   "product": "cb_series3",
+   "name": "CurrentBody S3",
+   "full_name": "CurrentBody Skin LED Light Therapy Mask Series 3",
+   "group": "LED face masks",
+   "group_id": "skinmask",
+   "status": "Deal",
+   "best": 530.99,
+   "shop": "glowera.at",
+   "url": "https://glowera.at/nl/nl/product/currentbody-skin-series-3-face",
+   "diff_pct": -10.0,
+   "avg2026": 590,
+   "threshold": 531,
    "owner": "gedeeld"
   },
   {
@@ -177,21 +192,6 @@
    "owner": "gedeeld"
   },
   {
-   "product": "cb_series3",
-   "name": "CurrentBody S3",
-   "full_name": "CurrentBody Skin LED Light Therapy Mask Series 3",
-   "group": "LED face masks",
-   "group_id": "skinmask",
-   "status": "Normaal",
-   "best": 589.99,
-   "shop": "CurrentBody NL",
-   "url": "https://www.currentbody.nl/products/currentbody-skin-led-light-therapy-mask",
-   "diff_pct": 0.0,
-   "avg2026": 590,
-   "threshold": 531,
-   "owner": "gedeeld"
-  },
-  {
    "product": "innolux_supernova",
    "name": "Supernova",
    "full_name": "Innolux Supernova LED daglichtlamp",
@@ -244,8 +244,8 @@
    "group_id": "soundbar",
    "status": "Duur",
    "best": 876.0,
-   "shop": "coolblue.nl",
-   "url": "https://www.coolblue.nl/product/945530/harman-kardon-enchant-1100-zwart.html",
+   "shop": "Coolblue.nl",
+   "url": "https://www.kieskeurig.nl/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
    "diff_pct": 21.4,
    "avg2026": 722,
    "threshold": 650,
