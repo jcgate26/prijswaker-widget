@@ -1,8 +1,8 @@
 {
  "name": "BF Deals",
- "updated": "2026-11-16",
+ "updated": "2026-11-17",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
- "deals": 1,
+ "deals": 2,
  "groups": [
   {
    "id": "soundbar",
@@ -33,10 +33,10 @@
    "group": "LED face masks",
    "group_id": "skinmask",
    "status": "Deal",
-   "best": 199.0,
-   "shop": "SharkNinja.nl",
+   "best": 205.0,
+   "shop": "Flaconi",
    "url": "https://www.kieskeurig.nl/gezichtsverzorgingstool/product/52125933-shark-cryoglow-huidverzorgingapparatuur-lichttherapie-voor-de-huid-lila",
-   "diff_pct": -31.2,
+   "diff_pct": -29.1,
    "avg2026": 289,
    "threshold": 260,
    "owner": "gedeeld"
@@ -47,14 +47,29 @@
    "full_name": "Demeyere Apollo 7 conische sauteuse 20 cm",
    "group": "Demeyere Apollo 7",
    "group_id": "pan",
-   "status": "Scherp",
-   "best": 129.0,
-   "shop": "bol.com (verkoper EP: Beerepoot)",
+   "status": "Deal",
+   "best": 119.0,
+   "shop": "bol.com (verkoper mijnkookwinkel)",
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o20-cm-2-l/9200000005802359/",
-   "diff_pct": -7.8,
+   "diff_pct": -14.9,
    "avg2026": 140,
    "threshold": 126,
    "owner": "jasper"
+  },
+  {
+   "product": "beam_ultra",
+   "name": "Beam Ultra",
+   "full_name": "Sonos Beam Ultra",
+   "group": "Speakers",
+   "group_id": "soundbar",
+   "status": "Normaal",
+   "best": 681.0,
+   "shop": "Amazon",
+   "url": "https://www.kieskeurig.nl/soundbar/product/57043128-sonos-beam-ultra-white-wit-7-1-2-kanalen",
+   "diff_pct": -2.1,
+   "avg2026": 695,
+   "threshold": 626,
+   "owner": "gedeeld"
   },
   {
    "product": "apollo_28",
@@ -66,7 +81,7 @@
    "best": 180.0,
    "shop": "bol.com (verkoper Storena)",
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-sauteerpan-28-cm/9200000021555469/",
-   "diff_pct": -1.7,
+   "diff_pct": -1.8,
    "avg2026": 183,
    "threshold": 165,
    "owner": "jasper"
@@ -94,7 +109,7 @@
    "group_id": "soundbar",
    "status": "Normaal",
    "best": 849.0,
-   "shop": "Coolblue.nl",
+   "shop": "HelloTV",
    "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
    "diff_pct": -0.9,
    "avg2026": 857,
@@ -117,21 +132,6 @@
    "owner": "gedeeld"
   },
   {
-   "product": "beam_ultra",
-   "name": "Beam Ultra",
-   "full_name": "Sonos Beam Ultra",
-   "group": "Speakers",
-   "group_id": "soundbar",
-   "status": "Normaal",
-   "best": 698.95,
-   "shop": "Tink.nl",
-   "url": "https://www.kieskeurig.nl/soundbar/product/57043127-sonos-beam-ultra-zwart-7-1-2-kanalen",
-   "diff_pct": 0.5,
-   "avg2026": 695,
-   "threshold": 626,
-   "owner": "gedeeld"
-  },
-  {
    "product": "apollo_24",
    "name": "Apollo 24 cm",
    "full_name": "Demeyere Apollo 7 conische sauteuse 24 cm",
@@ -141,7 +141,7 @@
    "best": 180.0,
    "shop": "bol.com",
    "url": "https://www.bol.com/nl/nl/p/demeyere-apollo-conische-sauteuse-zonder-deksel-o24-cm-3-3-l/9200000005802401/",
-   "diff_pct": 3.4,
+   "diff_pct": 3.3,
    "avg2026": 174,
    "threshold": 157,
    "owner": "jasper"
@@ -153,12 +153,12 @@
    "group": "Speakers",
    "group_id": "soundbar",
    "status": "Duur",
-   "best": 949.0,
+   "best": 912.0,
    "shop": "Coolblue.nl",
    "url": "https://www.kieskeurig.nl/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
-   "diff_pct": 31.5,
+   "diff_pct": 26.4,
    "avg2026": 722,
-   "threshold": 650,
+   "threshold": 649,
    "owner": "gedeeld"
   },
   {
