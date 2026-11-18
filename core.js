@@ -187,7 +187,7 @@ function cellForTheme(t) {
     deal: b.status === "Deal" ? pct(b.diff_pct) : null,
     price: eur0(b.best),
     sub: b.name,
-    note: b.best != null && b.diff_pct == null ? "new" : null,
+    note: b.coupon ? "code " + b.coupon : b.best != null && b.diff_pct == null ? "new" : null,
   };
 }
 
@@ -197,7 +197,8 @@ function cellForProduct(it) {
     deal: it.status === "Deal" ? pct(it.diff_pct) : null,
     price: eur0(it.best),
     sub: it.best == null ? "no shop yet" : shopName(it.shop),
-    note: it.best != null && it.diff_pct == null ? "new" : null,
+    // The price needs this discount code at checkout
+    note: it.coupon ? "code " + it.coupon : it.best != null && it.diff_pct == null ? "new" : null,
   };
 }
 
@@ -481,7 +482,7 @@ function updatedText(data) {
 function productRow(it, t) {
   const deal = it.status === "Deal";
   const info = it.best == null ? "no shop found yet"
-    : [shopName(it.shop), it.threshold ? `deal below ${eur0(it.threshold)}` : null].filter(Boolean).join(" · ");
+    : [shopName(it.shop), it.coupon ? `with code ${it.coupon}` : null, it.threshold ? `deal below ${eur0(it.threshold)}` : null].filter(Boolean).join(" · ");
   const mine = !t.allMine && ownerOf(it) !== "gedeeld" ? ' <span class="me">· only you</span>' : "";
   const right = it.diff_pct == null ? (it.best == null ? "" : "new") : pct(it.diff_pct);
   const inner = `<div class="l1"><span class="nm">${esc(it.name || it.full_name)}</span><span class="pr num">${eur(it.best)}</span></div>`
