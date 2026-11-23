@@ -1,6 +1,6 @@
 {
  "name": "BF Deals",
- "updated": "2026-11-22",
+ "updated": "2026-11-23",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
  "deals": 3,
  "groups": [
@@ -33,11 +33,11 @@
    "group": "LED face masks",
    "group_id": "skinmask",
    "status": "Deal",
-   "best": 201.52,
-   "shop": "SharkNinja.nl",
-   "url": "https://www.kieskeurig.nl/gezichtsverzorging/product/77949754-shark-cryoglow-led-masker-met-under-eye-cooling-in-donkerblauw-fw312eubl-van-sharkninja",
-   "coupon": "BF-EXTRA12",
-   "diff_pct": -28.1,
+   "best": 205.0,
+   "shop": "Flaconi",
+   "url": "https://www.kieskeurig.nl/gezichtsverzorgingstool/product/52125933-shark-cryoglow-huidverzorgingapparatuur-lichttherapie-voor-de-huid-lila",
+   "coupon": null,
+   "diff_pct": -26.8,
    "avg2026": 280,
    "threshold": 252,
    "owner": "gedeeld"
@@ -49,13 +49,13 @@
    "group": "Light therapy lamps",
    "group_id": "sad",
    "status": "Deal",
-   "best": 109.0,
-   "shop": "Amazon.nl",
-   "url": "https://www.beslist.nl/p/beurer-tl-85-sfeer-energielicht-led/286/6970229250293/",
+   "best": 119.43,
+   "shop": "Amazon",
+   "url": "https://www.kieskeurig.nl/energy_light/product/40637724-beurer-tl-85-daglichtlamp",
    "coupon": null,
-   "diff_pct": -25.6,
-   "avg2026": 147,
-   "threshold": 132,
+   "diff_pct": -18.2,
+   "avg2026": 146,
+   "threshold": 131,
    "owner": "jasper"
   },
   {
@@ -67,11 +67,11 @@
    "status": "Deal",
    "best": 899.0,
    "shop": "Art & Craft",
-   "url": "https://www.kieskeurig.nl/home_cinema_set/product/72646825-klipsch-flexus-core-300-zilver-5-1-2-kanalen",
+   "url": "https://www.beslist.nl/p/klipsch-flexus-core-300-zilver-walnoot/655/0743878067132/",
    "coupon": null,
-   "diff_pct": -11.0,
-   "avg2026": 1010,
-   "threshold": 909,
+   "diff_pct": -10.9,
+   "avg2026": 1009,
+   "threshold": 908,
    "owner": "gedeeld"
   },
   {
@@ -85,9 +85,9 @@
    "shop": "bol. Plaza",
    "url": "https://www.kieskeurig.nl/gezichtsverzorgingstool/product/52159084-therabody-theraface-mask-glo-stimulator-gezicht-wit",
    "coupon": null,
-   "diff_pct": -7.9,
+   "diff_pct": -7.8,
    "avg2026": 303,
-   "threshold": 273,
+   "threshold": 272,
    "owner": "gedeeld"
   },
   {
@@ -103,7 +103,7 @@
    "coupon": null,
    "diff_pct": -7.0,
    "avg2026": 184,
-   "threshold": 165,
+   "threshold": 166,
    "owner": "jasper"
   },
   {
@@ -114,8 +114,8 @@
    "group_id": "pan",
    "status": "Normaal",
    "best": 119.0,
-   "shop": "bol. Plaza",
-   "url": "https://www.kieskeurig.nl/bakvorm/product/3306426-demeyere-apollo-conische-sauteuse-zonder-deksel-20-cm",
+   "shop": "bol.com",
+   "url": "https://www.beslist.nl/p/demeyere-apollo-7-sauteuse-conisch-20-cm-7-laags-bodem/165/5412191549209/",
    "coupon": null,
    "diff_pct": -4.4,
    "avg2026": 125,
@@ -166,7 +166,7 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
    "coupon": null,
    "diff_pct": -0.9,
-   "avg2026": 857,
+   "avg2026": 856,
    "threshold": 771,
    "owner": "gedeeld"
   },
@@ -213,7 +213,7 @@
    "shop": "HelloTV",
    "url": "https://www.kieskeurig.nl/soundbar/product/57043127-sonos-beam-ultra-zwart-7-1-2-kanalen",
    "coupon": null,
-   "diff_pct": 0.1,
+   "diff_pct": 0.2,
    "avg2026": 688,
    "threshold": 619,
    "owner": "gedeeld"
@@ -229,9 +229,9 @@
    "shop": "bol. Plaza",
    "url": "https://www.kieskeurig.nl/energy_light/product/12810036-innolux-supernova-led-daglichtlamp",
    "coupon": null,
-   "diff_pct": 0.7,
+   "diff_pct": 0.8,
    "avg2026": 535,
-   "threshold": 482,
+   "threshold": 481,
    "owner": "jasper"
   },
   {
