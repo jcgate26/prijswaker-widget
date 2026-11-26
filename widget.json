@@ -1,8 +1,8 @@
 {
  "name": "BF Deals",
- "updated": "2026-11-25",
+ "updated": "2026-11-26",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
- "deals": 4,
+ "deals": 3,
  "groups": [
   {
    "id": "soundbar",
@@ -33,29 +33,13 @@
    "group": "LED face masks",
    "group_id": "skinmask",
    "status": "Deal",
-   "best": 205.0,
-   "shop": "Flaconi",
-   "url": "https://www.kieskeurig.nl/gezichtsverzorging/product/52355376-shark-cryoglow-led-masker-met-under-eye-cooling-in-donkergroen-fw312eusg-van-sharkninja",
-   "coupon": null,
-   "diff_pct": -26.6,
+   "best": 201.52,
+   "shop": "Sharkninja.nl",
+   "url": "https://www.beslist.nl/p/shark-cryoglow-led-masker-met-under-eye-cooling-in-donkerblauw-fw312eubl-van-sharkninja/286/0622356428217/",
+   "coupon": "BF-EXTRA12",
+   "diff_pct": -27.8,
    "avg2026": 279,
    "threshold": 251,
-   "owner": "gedeeld"
-  },
-  {
-   "product": "flexus_300",
-   "name": "Flexus Core 300",
-   "full_name": "Klipsch Flexus Core 300",
-   "group": "Speakers",
-   "group_id": "soundbar",
-   "status": "Deal",
-   "best": 799.0,
-   "shop": "Art & Craft",
-   "url": "https://www.beslist.nl/p/klipsch-flexus-core-300-zilver-walnoot/655/0743878067132/",
-   "coupon": null,
-   "diff_pct": -20.7,
-   "avg2026": 1008,
-   "threshold": 907,
    "owner": "gedeeld"
   },
   {
@@ -69,8 +53,8 @@
    "shop": "Amazon",
    "url": "https://www.kieskeurig.nl/energy_light/product/40637724-beurer-tl-85-daglichtlamp",
    "coupon": null,
-   "diff_pct": -17.6,
-   "avg2026": 145,
+   "diff_pct": -17.3,
+   "avg2026": 144,
    "threshold": 130,
    "owner": "jasper"
   },
@@ -83,11 +67,11 @@
    "status": "Deal",
    "best": 830.0,
    "shop": "Joybuy.nl",
-   "url": "https://www.beslist.nl/p/bose-lifestyle-ultra-soundbar-wit/655/0017817858946/",
+   "url": "https://www.kieskeurig.nl/soundbar/product/52197734-bose-lifestyle-ultra-soundbar-wit",
    "coupon": null,
-   "diff_pct": -15.6,
-   "avg2026": 983,
-   "threshold": 885,
+   "diff_pct": -15.5,
+   "avg2026": 982,
+   "threshold": 884,
    "owner": "gedeeld"
   },
   {
@@ -101,7 +85,7 @@
    "shop": "Douglas.nl",
    "url": "https://www.beslist.nl/p/therabody-theraface-mask-glo-led-gezichtsmasker-rood-licht-therapie-rood-infrarood-blauw-licht/286/0840295409696/",
    "coupon": null,
-   "diff_pct": -7.8,
+   "diff_pct": -7.7,
    "avg2026": 302,
    "threshold": 272,
    "owner": "gedeeld"
@@ -134,7 +118,7 @@
    "url": "https://www.beslist.nl/p/demeyere-apollo-conische-sauteuse-20cm-duoklopper/165/5412191000410/",
    "coupon": null,
    "diff_pct": -4.4,
-   "avg2026": 125,
+   "avg2026": 124,
    "threshold": 112,
    "owner": "jasper"
   },
@@ -219,6 +203,22 @@
    "owner": "gedeeld"
   },
   {
+   "product": "flexus_300",
+   "name": "Flexus Core 300",
+   "full_name": "Klipsch Flexus Core 300",
+   "group": "Speakers",
+   "group_id": "soundbar",
+   "status": "Normaal",
+   "best": 1009.0,
+   "shop": "Galaxus.nl",
+   "url": "https://www.beslist.nl/p/klipsch-flexus-core-300-185-w-5-1-2-kanaal-soundbar-zilver/655/0743878067132/",
+   "coupon": null,
+   "diff_pct": 0.1,
+   "avg2026": 1008,
+   "threshold": 907,
+   "owner": "gedeeld"
+  },
+  {
    "product": "beam_ultra",
    "name": "Beam Ultra",
    "full_name": "Sonos Beam Ultra",
@@ -229,9 +229,9 @@
    "shop": "HelloTV",
    "url": "https://www.kieskeurig.nl/soundbar/product/57043127-sonos-beam-ultra-zwart-7-1-2-kanalen",
    "coupon": null,
-   "diff_pct": 0.4,
+   "diff_pct": 0.5,
    "avg2026": 686,
-   "threshold": 618,
+   "threshold": 617,
    "owner": "gedeeld"
   },
   {
@@ -245,9 +245,9 @@
    "shop": "bol. Plaza",
    "url": "https://www.kieskeurig.nl/energy_light/product/12810036-innolux-supernova-led-daglichtlamp",
    "coupon": null,
-   "diff_pct": 0.9,
+   "diff_pct": 1.0,
    "avg2026": 534,
-   "threshold": 481,
+   "threshold": 480,
    "owner": "jasper"
   },
   {
