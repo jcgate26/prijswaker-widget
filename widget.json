@@ -1,8 +1,8 @@
 {
  "name": "BF Deals",
- "updated": "2026-11-27",
+ "updated": "2026-11-28",
  "dashboard": "https://claude.ai/artifact/UiurK16WKyuJygsnKk8xAM",
- "deals": 4,
+ "deals": 5,
  "groups": [
   {
    "id": "soundbar",
@@ -34,13 +34,29 @@
    "group_id": "skinmask",
    "status": "Deal",
    "best": 148.72,
-   "shop": "SharkNinja NL",
-   "url": "https://www.sharkninja.nl/shark-cryoglow-led-masker-met-under-eye-cooling-ijsblauw/FW312EU.html",
+   "shop": "SharkNinja.nl",
+   "url": "https://www.kieskeurig.nl/gezichtsverzorging/product/77949754-shark-cryoglow-led-masker-met-under-eye-cooling-in-donkerblauw-fw312eubl-van-sharkninja",
    "coupon": "BFDEAL",
-   "diff_pct": -46.7,
-   "avg2026": 279,
+   "diff_pct": -46.6,
+   "avg2026": 278,
    "threshold": 251,
    "owner": "gedeeld"
+  },
+  {
+   "product": "apollo_28",
+   "name": "Apollo 28 cm",
+   "full_name": "Demeyere Apollo 7 conische sauteuse 28 cm",
+   "group": "Demeyere Apollo 7",
+   "group_id": "pan",
+   "status": "Deal",
+   "best": 151.19,
+   "shop": "cookandsizzle.com",
+   "url": "https://www.cookandsizzle.com/nl-nl/products/demeyere-apollo-7-conische-sauteuse-28-cm",
+   "coupon": null,
+   "diff_pct": -18.0,
+   "avg2026": 184,
+   "threshold": 166,
+   "owner": "jasper"
   },
   {
    "product": "beurer_tl85",
@@ -53,9 +69,9 @@
    "shop": "Amazon",
    "url": "https://www.kieskeurig.nl/energy_light/product/40637724-beurer-tl-85-daglichtlamp",
    "coupon": null,
-   "diff_pct": -17.1,
+   "diff_pct": -16.8,
    "avg2026": 144,
-   "threshold": 130,
+   "threshold": 129,
    "owner": "jasper"
   },
   {
@@ -86,7 +102,7 @@
    "url": "https://www.beslist.nl/p/innolux-mesa-mega-led-daglichtlamp-extra-groot-10-000-lux/286/6420611984805/",
    "coupon": null,
    "diff_pct": -13.8,
-   "avg2026": 384,
+   "avg2026": 383,
    "threshold": 345,
    "owner": "jasper"
   },
@@ -101,26 +117,10 @@
    "shop": "Douglas.nl",
    "url": "https://www.beslist.nl/p/therabody-theraface-mask-glo-led-gezichtsmasker-rood-licht-therapie-rood-infrarood-blauw-licht/286/0840295409696/",
    "coupon": null,
-   "diff_pct": -7.7,
+   "diff_pct": -7.6,
    "avg2026": 302,
    "threshold": 272,
    "owner": "gedeeld"
-  },
-  {
-   "product": "apollo_28",
-   "name": "Apollo 28 cm",
-   "full_name": "Demeyere Apollo 7 conische sauteuse 28 cm",
-   "group": "Demeyere Apollo 7",
-   "group_id": "pan",
-   "status": "Scherp",
-   "best": 171.0,
-   "shop": "cookandsizzle.com",
-   "url": "https://www.cookandsizzle.com/nl-nl/products/demeyere-apollo-7-conische-sauteuse-28-cm",
-   "coupon": null,
-   "diff_pct": -7.3,
-   "avg2026": 184,
-   "threshold": 166,
-   "owner": "jasper"
   },
   {
    "product": "apollo_20",
@@ -130,13 +130,29 @@
    "group_id": "pan",
    "status": "Normaal",
    "best": 119.0,
-   "shop": "Braadbaas.nl",
-   "url": "https://www.beslist.nl/p/demeyere-apollo-conische-sauteuse-20cm-duoklopper/165/5412191000410/",
+   "shop": "bol. Plaza",
+   "url": "https://www.kieskeurig.nl/pan/product/3525502-demeyere-apollo-conische-sauteuse-20-cm-gratis-cuisipro-duoklopper",
    "coupon": null,
    "diff_pct": -4.4,
    "avg2026": 124,
    "threshold": 112,
    "owner": "jasper"
+  },
+  {
+   "product": "arc_ultra",
+   "name": "Arc Ultra",
+   "full_name": "Sonos Arc Ultra",
+   "group": "Speakers",
+   "group_id": "soundbar",
+   "status": "Normaal",
+   "best": 839.0,
+   "shop": "Tink.nl",
+   "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
+   "coupon": null,
+   "diff_pct": -1.9,
+   "avg2026": 855,
+   "threshold": 770,
+   "owner": "gedeeld"
   },
   {
    "product": "enchant_1100",
@@ -150,24 +166,8 @@
    "url": "https://www.kieskeurig.be/soundbar/product/51627359-harmankardon-hkench1100blkep-soundbar-luidspreker-zwart-5-1-4-kanalen-315-w",
    "coupon": null,
    "diff_pct": -1.6,
-   "avg2026": 721,
-   "threshold": 649,
-   "owner": "gedeeld"
-  },
-  {
-   "product": "arc_ultra",
-   "name": "Arc Ultra",
-   "full_name": "Sonos Arc Ultra",
-   "group": "Speakers",
-   "group_id": "soundbar",
-   "status": "Normaal",
-   "best": 849.0,
-   "shop": "HelloTV",
-   "url": "https://www.kieskeurig.nl/soundbar/product/51533010-sonos-arc-ultra-zwart",
-   "coupon": null,
-   "diff_pct": -0.8,
-   "avg2026": 856,
-   "threshold": 770,
+   "avg2026": 720,
+   "threshold": 648,
    "owner": "gedeeld"
   },
   {
@@ -179,11 +179,11 @@
    "status": "Normaal",
    "best": 999.0,
    "shop": "Correct.nl",
-   "url": "https://www.beslist.nl/p/klipsch-flexus-core-300-185-w-5-1-2-kanaal-soundbar-zilver/655/0743878067132/",
+   "url": "https://www.beslist.nl/p/klipsch-flexus-core-300-soundbar-zwart/655/0743878066708/",
    "coupon": null,
    "diff_pct": -0.8,
    "avg2026": 1007,
-   "threshold": 907,
+   "threshold": 906,
    "owner": "gedeeld"
   },
   {
@@ -229,9 +229,9 @@
    "shop": "HelloTV",
    "url": "https://www.kieskeurig.nl/soundbar/product/57043127-sonos-beam-ultra-zwart-7-1-2-kanalen",
    "coupon": null,
-   "diff_pct": 0.5,
+   "diff_pct": 0.6,
    "avg2026": 685,
-   "threshold": 617,
+   "threshold": 616,
    "owner": "gedeeld"
   },
   {
@@ -246,8 +246,8 @@
    "url": "https://www.kieskeurig.nl/soundbar/product/52197797-bose-lifestyle-ultra-soundbar-zwart",
    "coupon": null,
    "diff_pct": 1.8,
-   "avg2026": 982,
-   "threshold": 884,
+   "avg2026": 981,
+   "threshold": 883,
    "owner": "gedeeld"
   },
   {
@@ -257,11 +257,11 @@
    "group": "Demeyere Apollo 7",
    "group_id": "pan",
    "status": "Normaal",
-   "best": 173.0,
+   "best": 172.0,
    "shop": "Nordic Nest NL",
    "url": "https://www.kieskeurig.nl/pan/product/3306476-demeyere-apollo-conische-sauteuse-zonder-deksel-24-cm",
    "coupon": null,
-   "diff_pct": 4.2,
+   "diff_pct": 3.6,
    "avg2026": 166,
    "threshold": 149,
    "owner": "jasper"
